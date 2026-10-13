@@ -8,7 +8,11 @@
   "projects": {
     "social-app": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": { "type": "component" },
+        "@schematics/angular:interface": { "type": "interface" },
+        "@schematics/angular:service": { "type": "service" }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -25,6 +29,7 @@
               }
             ],
             "styles": [
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.css"
             ]
           },
