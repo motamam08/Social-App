@@ -1,5 +1,11 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth/services/auth.service';
 
@@ -12,14 +18,15 @@ import { AuthService } from '../../core/auth/services/auth.service';
 export class LoginComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly fb = inject(FormBuilder);
 
   loginErrorMessage: WritableSignal<string> = signal('');
   loginSuccessMessage: WritableSignal<string> = signal('');
   loading: WritableSignal<boolean> = signal(false);
 
-  loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', Validators.required),
+  loginForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
   });
 
   login() {

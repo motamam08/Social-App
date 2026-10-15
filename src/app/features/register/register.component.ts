@@ -1,6 +1,7 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import {
   AbstractControl,
+  FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -18,29 +19,29 @@ import { AuthService } from '../../core/auth/services/auth.service';
 export class RegisterComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly fb = inject(FormBuilder);
 
   registerErrorMessage: WritableSignal<string> = signal('');
   registerSuccessMessage: WritableSignal<string> = signal('');
   loading: WritableSignal<boolean> = signal(false);
 
-  registerForm = new FormGroup(
+  registerForm = this.fb.group(
     {
-      name: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(20),
-      ]),
-      username: new FormControl(''),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      dateOfBirth: new FormControl('', Validators.required),
-      gender: new FormControl('', Validators.required),
-      password: new FormControl(
+      name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      username: [''],
+      email: ['', [Validators.required, Validators.email]],
+      dateOfBirth: ['', Validators.required],
+      gender: ['', Validators.required],
+      password: [
         '',
-        Validators.pattern(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
-        ),
-      ),
-      rePassword: new FormControl('', Validators.required),
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/,
+          ),
+        ],
+      ],
+      rePassword: ['', Validators.required],
     },
     { validators: this.confirmPassword },
   );
