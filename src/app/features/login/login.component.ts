@@ -36,10 +36,12 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe({
         next: (res) => {
           if (res.success) {
+            localStorage.setItem('socialToken', res.data.token);
+            localStorage.setItem('userData', JSON.stringify(res.data.user));
             this.loginSuccessMessage.set(res.message);
             setTimeout(() => {
               this.router.navigate(['/feed']);
-            }, 1500);
+            }, 1000);
           }
         },
         error: (err) => {

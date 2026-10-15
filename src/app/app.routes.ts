@@ -1,3 +1,4 @@
+import { validUserGuard } from './core/auth/guards/valid-user-guard';
 import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { RegisterComponent } from './features/register/register.component';
@@ -8,12 +9,14 @@ import { ProfileComponent } from './features/profile/profile.component';
 import { NotifactionComponent } from './features/notifaction/notifaction.component';
 import { NotFoundComponent } from './features/not-found/not-found.component';
 import { ForgetPasswordComponent } from './features/forget-password/forget-password.component';
+import { isLoggedGuard } from './core/auth/guards/is-logged-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: '',
     component: AuthLayoutComponent,
+    canActivate: [isLoggedGuard],
     children: [
       { path: 'register', component: RegisterComponent },
       { path: 'login', component: LoginComponent },
@@ -23,6 +26,7 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    canActivate: [validUserGuard],
     children: [
       { path: 'feed', component: FeedComponent },
       { path: 'profile', component: ProfileComponent },
