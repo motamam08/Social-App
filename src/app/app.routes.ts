@@ -7,6 +7,7 @@ import { FeedComponent } from './features/feed/feed.component';
 import { ProfileComponent } from './features/profile/profile.component';
 import { NotifactionComponent } from './features/notifaction/notifaction.component';
 import { NotFoundComponent } from './features/not-found/not-found.component';
+import { ForgetPasswordComponent } from './features/forget-password/forget-password.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,6 +17,7 @@ export const routes: Routes = [
     children: [
       { path: 'register', component: RegisterComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'forget-password', component: ForgetPasswordComponent },
     ],
   },
   {
