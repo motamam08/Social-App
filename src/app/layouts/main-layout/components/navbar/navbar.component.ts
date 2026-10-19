@@ -1,9 +1,25 @@
 import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  // isDropdownOpen = false;
+
+  // user = {
+  //   name: 'Mohamed Tamam',
+  //   image: 'assets/images/avatar.jpg',
+  // };
+
+  // toggleDropdown(): void {
+  //   this.isDropdownOpen = !this.isDropdownOpen;
+  // }
+
+  // closeDropdown(): void {
+  //   this.isDropdownOpen = false;
+  // }
+}

@@ -31,7 +31,6 @@ export const routes: Routes = [
       { path: 'feed', component: FeedComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'notifaction', component: NotifactionComponent },
-      { path: 'notifaction', component: NotifactionComponent },
     ],
   },
   { path: '**', component: NotFoundComponent },

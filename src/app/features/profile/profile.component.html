@@ -1,1 +1,232 @@
-<p>profile works!</p>
+<main>
+    <!-- ═══════════════════════ PROFILE START ═══════════════════════ -->
+
+    <!-- ═════════ Cover + profile card ═════════ -->
+    <section aria-labelledby="profile-name" class="mx-auto max-w-page px-4 pt-7 desk:px-8">
+        <!-- Cover (decorative; swap for a real <img> when users upload covers) -->
+        <div aria-hidden="true"
+            class="relative block h-55 overflow-hidden rounded-control border-3 border-line bg-pop-blue">
+            <span class="absolute top-7 right-9 size-30 rounded-full border-3 border-line bg-primary"></span>
+            <span class="absolute -bottom-5 left-9 h-25 w-35 -rotate-8 border-3 border-line bg-accent"></span>
+        </div>
+
+        <div class="relative -mt-12.5 rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
+            <div class="flex flex-wrap items-end gap-5">
+                <div aria-hidden="true"
+                    class="flex size-27.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-pink text-4xl font-extrabold text-ink">
+                    MP
+                </div>
+
+                <div class="min-w-55 flex-1">
+                    <h1 id="profile-name" class="text-heading-lg leading-tight font-extrabold">Mina Park</h1>
+                    <p class="mt-1.5 font-mono text-label font-bold">&#64;minamakes</p>
+                </div>
+
+                <!-- Someone else's profile -->
+                <div class="flex items-center gap-3">
+                    <button type="button" aria-pressed="false"
+                        class="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-accent px-5 py-3 font-sans text-button font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                        Follow
+                    </button>
+                    <a href="/messages/minamakes"
+                        class="inline-flex min-h-11 items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                        Message
+                    </a>
+                </div>
+                <!--
+              Own profile: replace the <div> above with
+              <a href="/settings/profile" class="inline-flex min-h-11 items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">Edit profile</a>
+            -->
+            </div>
+
+            <p class="mt-4 max-w-155 text-lead font-medium">
+                Illustrator. Sticker addict. Making loud little things for the internet.
+            </p>
+
+            <!-- Stats. The last tag is the new saved-posts counter. -->
+            <ul aria-label="Profile stats" class="m-0 mt-5 flex list-none flex-wrap items-center gap-3 p-0">
+                <li
+                    class="inline-block rounded-full border-2 border-line bg-pop-yellow px-2.5 py-0.75 font-mono text-sm font-bold text-ink">
+                    86 posts</li>
+                <li
+                    class="inline-block rounded-full border-2 border-line bg-surface px-2.5 py-0.75 font-mono text-sm font-bold text-ink">
+                    4.1k followers</li>
+                <li
+                    class="inline-block rounded-full border-2 border-line bg-pop-mint px-2.5 py-0.75 font-mono text-sm font-bold text-ink">
+                    210 following</li>
+
+                <!-- Saved posts are private: render this tag only on the signed-in user's own profile -->
+                <li
+                    class="inline-flex items-center gap-1.5 rounded-full border-2 border-line bg-pop-blue px-2.5 py-0.75 font-mono text-sm font-bold text-ink">
+                    <svg class="size-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="3" aria-hidden="true">
+                        <path d="M6 3h12v18l-6-5-6 5z" />
+                    </svg>
+                    34 saved
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ═════════ Posts + sidebar ═════════ -->
+    <div class="mx-auto grid max-w-page items-start gap-7 px-4 py-7 desk:grid-cols-[minmax(0,1fr)_320px] desk:px-8">
+        <!-- Main column -->
+        <div class="flex min-w-0 flex-col gap-6">
+            <!--
+            Sections (plain links). Active → min-h-12 bg-primary px-5 py-3 text-button shadow-brutal-md + aria-current="page"
+                                   Inactive → min-h-11 bg-surface px-3.5 py-2 text-small shadow-brutal-sm
+          -->
+            <nav aria-label="Profile sections" class="flex flex-wrap items-center gap-3">
+                <a href="?tab=posts" aria-current="page"
+                    class="inline-flex min-h-12 items-center gap-2 rounded-control border-3 border-line bg-primary px-5 py-3 text-button font-extrabold text-ink no-underline shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                    Posts
+                </a>
+                <a href="?tab=media"
+                    class="inline-flex min-h-11 items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                    Media
+                </a>
+                <a href="?tab=likes"
+                    class="inline-flex min-h-11 items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                    Likes
+                </a>
+            </nav>
+
+            <section aria-label="Posts" class="flex flex-col gap-6">
+                <!-- Post 1 · with media -->
+                <article class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
+                    <header class="flex items-center gap-3">
+                        <div aria-hidden="true"
+                            class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-pink font-extrabold text-ink">
+                            MP</div>
+                        <div>
+                            <a href="/u/minamakes"
+                                class="font-bold text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">Mina
+                                Park</a>
+                            <div class="font-mono text-label font-bold"><time datetime="2026-10-19T09:48:00Z">12m
+                                    ago</time></div>
+                        </div>
+                        <span
+                            class="ml-auto inline-block rounded-full border-2 border-line bg-pop-mint px-2.5 py-0.75 font-mono text-caption font-bold text-ink">design</span>
+                    </header>
+
+                    <p class="my-3.5 text-lead leading-snug font-medium">
+                        Spent all weekend turning my old sketchbook into stickers. Thick borders, hard
+                        shadows, zero regrets.
+                    </p>
+
+                    <div aria-hidden="true"
+                        class="relative block h-50 overflow-hidden rounded-control border-3 border-line bg-pop-blue">
+                        <span
+                            class="absolute top-7 right-9 size-30 rounded-full border-3 border-line bg-primary"></span>
+                        <span
+                            class="absolute -bottom-5 left-9 h-25 w-35 -rotate-8 border-3 border-line bg-accent"></span>
+                    </div>
+
+                    <footer class="mt-3.5 flex flex-wrap items-center gap-2.5">
+                        <button type="button" aria-pressed="false" aria-label="Like, 248 likes"
+                            class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                aria-hidden="true">
+                                <path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z" />
+                            </svg>
+                            248
+                        </button>
+                        <a href="/post/p1" aria-label="Comments, 32"
+                            class="inline-flex min-h-11 items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                aria-hidden="true">
+                                <path d="M4 5h16v11H9l-5 4z" />
+                            </svg>
+                            32
+                        </a>
+                        <button type="button"
+                            class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                            Share
+                        </button>
+                    </footer>
+                </article>
+
+                <!-- Post 2 · already liked -->
+                <article class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
+                    <header class="flex items-center gap-3">
+                        <div aria-hidden="true"
+                            class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-pink font-extrabold text-ink">
+                            MP</div>
+                        <div>
+                            <a href="/u/minamakes"
+                                class="font-bold text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">Mina
+                                Park</a>
+                            <div class="font-mono text-label font-bold"><time datetime="2026-10-17T10:00:00Z">2d
+                                    ago</time></div>
+                        </div>
+                        <span
+                            class="ml-auto inline-block rounded-full border-2 border-line bg-pop-mint px-2.5 py-0.75 font-mono text-caption font-bold text-ink">art</span>
+                    </header>
+
+                    <p class="my-3.5 text-lead leading-snug font-medium">
+                        Day 14 of drawing one weird creature a day. Today: a toaster with opinions.
+                    </p>
+
+                    <footer class="mt-3.5 flex flex-wrap items-center gap-2.5">
+                        <button type="button" aria-pressed="true" aria-label="Like, 187 likes"
+                            class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                            <svg class="size-5 fill-accent" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"
+                                aria-hidden="true">
+                                <path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z" />
+                            </svg>
+                            187
+                        </button>
+                        <a href="/post/p3" aria-label="Comments, 21"
+                            class="inline-flex min-h-11 items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                aria-hidden="true">
+                                <path d="M4 5h16v11H9l-5 4z" />
+                            </svg>
+                            21
+                        </a>
+                        <button type="button"
+                            class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                            Share
+                        </button>
+                    </footer>
+                </article>
+
+                <!--
+              Empty state: show instead of the articles when there is nothing to list.
+              <p class="rounded-card border-3 border-line bg-surface p-5.5 font-semibold text-ink shadow-brutal-lg">Nothing here yet.</p>
+            -->
+            </section>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="flex flex-col gap-6 desk:sticky desk:top-6">
+            <section aria-labelledby="about-title"
+                class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
+                <h2 id="about-title" class="text-subhead leading-tight font-extrabold">About</h2>
+                <p class="mt-2.5 leading-normal font-medium">
+                    Based in Seoul. Open for sticker packs and zine collabs.
+                </p>
+                <p class="mt-3.5 font-mono text-label font-bold">
+                    Joined <time datetime="2025-03-01">March 2025</time>
+                </p>
+            </section>
+
+            <section aria-labelledby="trending-title"
+                class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
+                <h2 id="trending-title" class="text-subhead leading-tight font-extrabold">Trending</h2>
+                <ul class="mt-2.5 list-none p-0">
+                    <li class="flex items-center justify-between border-t-2 border-dashed border-line py-2.5">
+                        <b>#popweek</b><span class="font-mono text-label font-bold">12k</span>
+                    </li>
+                    <li class="flex items-center justify-between border-t-2 border-dashed border-line py-2.5">
+                        <b>#stickerclub</b><span class="font-mono text-label font-bold">8k</span>
+                    </li>
+                    <li class="flex items-center justify-between border-t-2 border-dashed border-line py-2.5">
+                        <b>#mondaymood</b><span class="font-mono text-label font-bold">5k</span>
+                    </li>
+                </ul>
+            </section>
+        </aside>
+    </div>
+    <!-- ════════════════════════ PROFILE END ════════════════════════ -->
+</main>

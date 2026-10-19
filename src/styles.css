@@ -15,7 +15,7 @@
     min-height: 100dvh;
   }
 
-  :where(a, button, input, select, textarea, [tabindex]:not([tabindex='-1'])):focus-visible {
+  :where(input, select, textarea, [tabindex]:not([tabindex='-1'])):focus-visible {
     outline: 3px solid var(--color-info);
     outline-offset: 3px;
     box-shadow: var(--shadow-brutal-focus);
@@ -60,6 +60,12 @@
   .auth-card {
     width: 100%;
   }
+  .shadow-brutal-sm {
+    --tw-shadow: 3px 3px 0 var(--tw-shadow-color, var(--color-line));
+    box-shadow:
+      var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow),
+      var(--tw-ring-shadow), var(--tw-shadow);
+  }
 }
 
 @theme static {
@@ -76,6 +82,9 @@
   --text-lead-lg: 1.25rem;
   --text-subhead: 1.375rem;
   --text-heading: 2.125rem;
+  --text-giant: clamp(7.5rem, 22vw, 18.75rem);
+  --text-giant--line-height: 0.9;
+  --text-giant--font-weight: 800;
 
   --text-display: clamp(4rem, 6vw, 8rem);
   --text-display--line-height: 0.95;
@@ -92,11 +101,13 @@
   --color-pop-pink: #ff5ca8;
   --color-pop-blue: #5b7cff;
   --color-pop-mint: #4fe3b0;
-
+  --color-lavender: #e7dfff;
+  --color-butter: #fff3a8;
   --color-primary: var(--color-pop-yellow);
   --color-accent: var(--color-pop-pink);
   --color-info: var(--color-pop-blue);
-
+  --color-canvas: var(--color-lavender);
+  --color-unread: var(--color-butter);
   --color-surface: var(--color-paper);
   --color-line: var(--color-ink);
 
@@ -113,7 +124,9 @@
   --shadow-brutal-focus: 4px 4px 0 var(--color-info);
 
   /* Layout */
-  --container-auth: 27.5rem;
+  /* --container-auth: 27.5rem; */
+  --container-page: 77.5rem;
+  --container-content: 48.75rem;
   --breakpoint-desk: 900px;
 
   /* Animation */
@@ -121,6 +134,15 @@
 }
 @utility border-brutal-thin {
   border: 2px solid var(--color-line);
+}
+@utility border-brutal {
+  border: 3px solid var(--color-line);
+}
+@utility max-w-page {
+  max-width: var(--container-page);
+}
+@utilitymax-w-content {
+  max-width: var(--container-content);
 }
 
 @media (min-width: 900px) and (min-height: 650px) {

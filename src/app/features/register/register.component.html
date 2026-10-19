@@ -1,14 +1,10 @@
 <div class="auth-layout grid min-h-dvh desk:grid-cols-2">
   <!-- Left Hero Section -->
   <section
-    class="auth-hero flex flex-col justify-evenly gap-5 border-b-3 border-line bg-pop-pink p-6 desk:border-r-3 desk:border-b-0 desk:p-10"
-  >
+    class="auth-hero flex flex-col justify-evenly gap-5 border-b-3 border-line bg-pop-pink p-6 desk:border-r-3 desk:border-b-0 desk:p-10">
     <!-- Logo -->
-    <a
-      href="/"
-      aria-label="PopBlock home"
-      class="inline-block self-start -rotate-2 rounded-logo border-3 border-line bg-primary px-3 py-1 text-2xl font-extrabold text-ink no-underline shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none motion-reduce:transition-none"
-    >
+    <a href="/" aria-label="PopBlock home"
+      class="inline-block self-start -rotate-2 rounded-logo border-3 border-line bg-primary px-3 py-1 text-2xl font-extrabold text-ink no-underline shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none motion-reduce:transition-none">
       POP<span class="ml-1 rounded-chip bg-ink px-1.5 text-primary">BLOCK</span>
     </a>
 
@@ -28,32 +24,26 @@
     <!-- Hashtags -->
     <ul class="m-0 flex list-none flex-wrap items-center gap-2 p-0">
       <li
-        class="rounded-full border-2 border-line bg-pop-yellow px-2.5 py-0.75 font-mono text-caption font-bold text-ink"
-      >
+        class="rounded-full border-2 border-line bg-pop-yellow px-2.5 py-0.75 font-mono text-caption font-bold text-ink">
         #nofilter
       </li>
 
-      <li
-        class="rounded-full border-2 border-line bg-surface px-2.5 py-0.75 font-mono text-caption font-bold text-ink"
-      >
+      <li class="rounded-full border-2 border-line bg-surface px-2.5 py-0.75 font-mono text-caption font-bold text-ink">
         #friendsfirst
       </li>
 
       <li
-        class="rounded-full border-2 border-line bg-pop-mint px-2.5 py-0.75 font-mono text-caption font-bold text-ink"
-      >
+        class="rounded-full border-2 border-line bg-pop-mint px-2.5 py-0.75 font-mono text-caption font-bold text-ink">
         #popnow
       </li>
     </ul>
   </section>
 
   <!-- Right Form Section -->
-  <main class="auth-main flex items-center justify-center px-4 py-4 desk:px-6">
+  <main class="auth-main flex items-center justify-center px-4 py-4 bg-white desk:px-6">
     <div class="w-full max-w-auth">
       <!-- Form Card -->
-      <div
-        class="auth-card rounded-card border-3 border-line bg-surface p-4 text-ink shadow-brutal-lg desk:p-5"
-      >
+      <div class="auth-card rounded-card border-3 border-line bg-surface p-4 text-ink shadow-brutal-lg desk:p-5">
         <form [formGroup]="registerForm" (submit)="register()">
           <!-- Form Heading -->
           <header class="auth-header">
@@ -69,43 +59,32 @@
                 Full name
               </label>
 
-              <input
-                id="fullname"
-                name="name"
-                formControlName="name"
-                type="text"
-                placeholder="Please enter your full name"
-                autocomplete="name"
-                required
-                class="form-control"
-              />
+              <input id="fullname" name="name" formControlName="name" type="text"
+                placeholder="Please enter your full name" autocomplete="name" required class="form-control" />
             </div>
 
             <div>
               @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
-                <p class="mt-1.5">
-                  @if (registerForm.get('name')?.hasError('required')) {
-                    <span
-                      class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                    >
-                      Required
-                    </span>
-                  }
-                  @if (registerForm.get('name')?.hasError('minlength')) {
-                    <span
-                      class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                    >
-                      Please enter at least 3 cahracters.
-                    </span>
-                  }
-                  @if (registerForm.get('name')?.hasError('maxlength')) {
-                    <span
-                      class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                    >
-                      Please enter at most 20 cahracters.
-                    </span>
-                  }
-                </p>
+              <p class="mt-1.5">
+                @if (registerForm.get('name')?.hasError('required')) {
+                <span
+                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                  Required
+                </span>
+                }
+                @if (registerForm.get('name')?.hasError('minlength')) {
+                <span
+                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                  Please enter at least 3 cahracters.
+                </span>
+                }
+                @if (registerForm.get('name')?.hasError('maxlength')) {
+                <span
+                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                  Please enter at most 20 cahracters.
+                </span>
+                }
+              </p>
               }
             </div>
           </div>
@@ -117,15 +96,8 @@
               <span class="font-normal">(optional)</span>
             </label>
 
-            <input
-              id="username"
-              name="username"
-              formControlName="username"
-              type="text"
-              placeholder="@username"
-              autocomplete="username"
-              class="form-control"
-            />
+            <input id="username" name="username" formControlName="username" type="text" placeholder="@username"
+              autocomplete="username" class="form-control" />
           </div>
 
           <!-- Email -->
@@ -135,35 +107,25 @@
                 Email address
               </label>
 
-              <input
-                id="email"
-                name="email"
-                formControlName="email"
-                type="email"
-                placeholder="you@email.com"
-                autocomplete="email"
-                required
-                class="form-control"
-              />
+              <input id="email" name="email" formControlName="email" type="email" placeholder="you@email.com"
+                autocomplete="email" required class="form-control" />
             </div>
             <div>
               @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-                <p class="mt-1.5">
-                  @if (registerForm.get('email')?.hasError('required')) {
-                    <span
-                      class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                    >
-                      Required
-                    </span>
-                  }
-                  @if (registerForm.get('email')?.hasError('email')) {
-                    <span
-                      class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                    >
-                      Please Enter a Valide Email
-                    </span>
-                  }
-                </p>
+              <p class="mt-1.5">
+                @if (registerForm.get('email')?.hasError('required')) {
+                <span
+                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                  Required
+                </span>
+                }
+                @if (registerForm.get('email')?.hasError('email')) {
+                <span
+                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                  Please Enter a Valide Email
+                </span>
+                }
+              </p>
               }
             </div>
           </div>
@@ -175,13 +137,7 @@
                 Gender
               </label>
 
-              <select
-                id="gender"
-                formControlName="gender"
-                name="gender"
-                required
-                class="form-control"
-              >
+              <select id="gender" formControlName="gender" name="gender" required class="form-control">
                 <option value="" disabled selected>Select gender</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -189,15 +145,14 @@
             </div>
             <div>
               @if (registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched) {
-                <p class="mt-1.5">
-                  @if (registerForm.get('gender')?.hasError('required')) {
-                    <span
-                      class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                    >
-                      Required
-                    </span>
-                  }
-                </p>
+              <p class="mt-1.5">
+                @if (registerForm.get('gender')?.hasError('required')) {
+                <span
+                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                  Required
+                </span>
+                }
+              </p>
               }
             </div>
           </div>
@@ -209,29 +164,21 @@
                 Date of birth
               </label>
 
-              <input
-                id="date"
-                name="date"
-                formControlName="dateOfBirth"
-                type="date"
-                autocomplete="bday"
-                required
-                class="form-control"
-              />
+              <input id="date" name="date" formControlName="dateOfBirth" type="date" autocomplete="bday" required
+                class="form-control" />
             </div>
             <div>
               @if (
-                registerForm.get('dateOfBirth')?.invalid && registerForm.get('dateOfBirth')?.touched
+              registerForm.get('dateOfBirth')?.invalid && registerForm.get('dateOfBirth')?.touched
               ) {
-                <p class="mt-1.5">
-                  @if (registerForm.get('dateOfBirth')?.hasError('required')) {
-                    <span
-                      class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                    >
-                      Required
-                    </span>
-                  }
-                </p>
+              <p class="mt-1.5">
+                @if (registerForm.get('dateOfBirth')?.hasError('required')) {
+                <span
+                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                  Required
+                </span>
+                }
+              </p>
               }
             </div>
           </div>
@@ -243,38 +190,27 @@
                 Password
               </label>
 
-              <input
-                id="password"
-                name="password"
-                formControlName="password"
-                type="password"
-                placeholder="Password"
-                autocomplete="new-password"
-                minlength="8"
-                required
-                class="form-control"
-              />
+              <input id="password" name="password" formControlName="password" type="password" placeholder="Password"
+                autocomplete="new-password" minlength="8" required class="form-control" />
             </div>
 
             <div>
               @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-                <p class="mt-1.5">
-                  @if (registerForm.get('password')?.hasError('required')) {
-                    <span
-                      class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                    >
-                      Required
-                    </span>
-                  }
-                  @if (registerForm.get('password')?.hasError('pattern')) {
-                    <span
-                      class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                    >
-                      at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, and 1
-                      special character
-                    </span>
-                  }
-                </p>
+              <p class="mt-1.5">
+                @if (registerForm.get('password')?.hasError('required')) {
+                <span
+                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                  Required
+                </span>
+                }
+                @if (registerForm.get('password')?.hasError('pattern')) {
+                <span
+                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                  at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, and 1
+                  special character
+                </span>
+                }
+              </p>
               }
             </div>
           </div>
@@ -286,79 +222,63 @@
                 Confirm password
               </label>
 
-              <input
-                id="repassword"
-                name="repassword"
-                formControlName="rePassword"
-                type="password"
-                placeholder="Confirm password"
-                autocomplete="new-password"
-                minlength="8"
-                required
-                class="form-control"
-              />
+              <input id="repassword" name="repassword" formControlName="rePassword" type="password"
+                placeholder="Confirm password" autocomplete="new-password" minlength="8" required
+                class="form-control" />
             </div>
 
             @if (
-              registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched
+            registerForm.get('rePassword')?.invalid && registerForm.get('rePassword')?.touched
             ) {
-              <p class="mt-1.5">
-                @if (registerForm.get('rePassword')?.hasError('required')) {
-                  <span
-                    class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                  >
-                    Required
-                  </span>
-                }
-                @if (registerForm.get('rePassword')?.hasError('mismatch')) {
-                  <span
-                    class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                  >
-                    Password do not Match
-                  </span>
-                }
-              </p>
+            <p class="mt-1.5">
+              @if (registerForm.get('rePassword')?.hasError('required')) {
+              <span
+                class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                Required
+              </span>
+              }
+              @if (registerForm.get('rePassword')?.hasError('mismatch')) {
+              <span
+                class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                Password do not Match
+              </span>
+              }
+            </p>
             }
           </div>
 
           <!-- Submit Button -->
-          <button
-            type="submit"
-            class="auth-submit mt-3 inline-flex min-h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-accent px-4 py-2 font-sans font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:transition-none"
-          >
+          <button type="submit"
+            class="auth-submit mt-3 inline-flex min-h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-accent px-4 py-2 font-sans font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:transition-none">
             Create new account
             @if (loading()) {
-              <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+            <i class="fa-solid fa-spinner fa-spin-pulse"></i>
             }
           </button>
 
           @if (registerSuccessMessage()) {
-            <p class="mt-2.5">
-              <span
-                class="inline-block rounded-chip border-brutal-thin bg-pop-mint px-1.5 font-mono text-caption font-bold"
-              >
-                {{ registerSuccessMessage() }}
-              </span>
-            </p>
+          <p class="mt-2.5">
+            <span
+              class="inline-block rounded-chip border-brutal-thin bg-pop-mint px-1.5 font-mono text-caption font-bold">
+              {{ registerSuccessMessage() }}
+            </span>
+          </p>
           }
 
           @if (registerErrorMessage()) {
-            <p class="mt-2.5">
-              <span
-                class="inline-block rounded-chip border-brutal-thin bg-pop-yellow px-1.5 font-mono text-caption font-bold"
-              >
-                {{ registerErrorMessage() }}
-              </span>
-            </p>
+          <p class="mt-2.5">
+            <span
+              class="inline-block rounded-chip border-brutal-thin bg-pop-yellow px-1.5 font-mono text-caption font-bold">
+              {{ registerErrorMessage() }}
+            </span>
+          </p>
           }
 
           <!-- Login Link -->
           <p class="auth-footer mt-3 text-center font-semibold">
             Already in?
-            <a
-              routerLink="/login"
-              class="rounded-sm font-extrabold text-ink underline decoration-2 underline-offset-4 hover:bg-primary"
-            >
+            <a routerLink="/login"
+              class="rounded-sm font-extrabold text-ink underline decoration-2 underline-offset-4 hover:bg-primary">
               Log in
             </a>
           </p>
