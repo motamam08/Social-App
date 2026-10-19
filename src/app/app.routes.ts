@@ -10,6 +10,7 @@ import { NotifactionComponent } from './features/notifaction/notifaction.compone
 import { NotFoundComponent } from './features/not-found/not-found.component';
 import { ForgetPasswordComponent } from './features/forget-password/forget-password.component';
 import { isLoggedGuard } from './core/auth/guards/is-logged-guard';
+import { ChangePasswordComponent } from './features/change-password/change-password.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -29,6 +30,7 @@ export const routes: Routes = [
     canActivate: [validUserGuard],
     children: [
       { path: 'feed', component: FeedComponent },
+      { path: 'change-password', component: ChangePasswordComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'notifaction', component: NotifactionComponent },
     ],

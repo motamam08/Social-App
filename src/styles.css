@@ -124,7 +124,7 @@
   --shadow-brutal-focus: 4px 4px 0 var(--color-info);
 
   /* Layout */
-  /* --container-auth: 27.5rem; */
+  --container-auth: 27.5rem;
   --container-page: 77.5rem;
   --container-content: 48.75rem;
   --breakpoint-desk: 900px;

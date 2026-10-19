@@ -1,14 +1,10 @@
 <div class="auth-layout grid min-h-dvh desk:grid-cols-2">
   <!-- Left Hero Section -->
   <section
-    class="auth-hero flex flex-col justify-evenly gap-8 border-b-3 border-line bg-pop-blue p-6 desk:border-r-3 desk:border-b-0 desk:p-10"
-  >
+    class="auth-hero flex flex-col justify-evenly gap-8 border-b-3 border-line bg-pop-blue p-6 desk:border-r-3 desk:border-b-0 desk:p-10">
     <!-- Logo -->
-    <a
-      routerLink="/"
-      aria-label="PopBlock home"
-      class="inline-block self-start -rotate-2 rounded-logo border-3 border-line bg-primary px-3 py-1 text-2xl font-extrabold text-ink no-underline shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs"
-    >
+    <a routerLink="/" aria-label="PopBlock home"
+      class="inline-block self-start -rotate-2 rounded-logo border-3 border-line bg-primary px-3 py-1 text-2xl font-extrabold text-ink no-underline shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs">
       POP<span class="ml-1 rounded-chip bg-ink px-1.5 text-primary"> BLOCK </span>
     </a>
 
@@ -18,9 +14,7 @@
         Welcome <br />
         back, <br />legend.
       </h1>
-      <div
-        class="mt-7 max-w-80 -rotate-3 bg-surface block border-brutal p-5.5 rounded-card shadow-brutal-lg text-ink"
-      >
+      <div class="mt-7 max-w-80 -rotate-3 bg-surface block border-brutal p-5.5 rounded-card shadow-brutal-lg text-ink">
         <div class="flex items-center gap-3">
           <b>Ready to see whats new.!</b>
         </div>
@@ -55,11 +49,9 @@
 
   <!-- Login Section -->
   <main class="auth-main flex items-center justify-center px-4 py-8 desk:px-6">
-    <div class="w-full max-w-auth">
+    <div class="w-full">
       <!-- Login Card -->
-      <div
-        class="auth-card rounded-card border-3 border-line bg-surface p-5 text-ink shadow-brutal-lg desk:p-8"
-      >
+      <div class="auth-card rounded-card border-3 border-line bg-surface p-5 text-ink shadow-brutal-lg desk:p-8">
         <form [formGroup]="loginForm" (submit)="login()">
           <!-- Heading -->
           <header>
@@ -73,34 +65,24 @@
                 Email or username
               </label>
 
-              <input
-                id="email"
-                name="email"
-                formControlName="email"
-                type="email"
-                placeholder="Email or username"
-                required
-                email
-                class="form-control"
-              />
+              <input id="email" name="email" formControlName="email" type="email" placeholder="Email or username"
+                required email class="form-control" />
             </div>
 
             <div class="mt-2">
               @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-                @if (loginForm.get('email')?.hasError('required')) {
-                  <span
-                    class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                  >
-                    Required
-                  </span>
-                }
-                @if (loginForm.get('email')?.hasError('email')) {
-                  <span
-                    class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                  >
-                    Please Enter a Valide Email
-                  </span>
-                }
+              @if (loginForm.get('email')?.hasError('required')) {
+              <span
+                class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                Required
+              </span>
+              }
+              @if (loginForm.get('email')?.hasError('email')) {
+              <span
+                class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                Please Enter a Valide Email
+              </span>
+              }
               }
             </div>
           </div>
@@ -112,25 +94,17 @@
                 Password
               </label>
 
-              <input
-                id="password"
-                name="password"
-                formControlName="password"
-                type="password"
-                placeholder="Enter your password"
-                required
-                class="form-control"
-              />
+              <input id="password" name="password" formControlName="password" type="password"
+                placeholder="Enter your password" required class="form-control" />
             </div>
             <div class="mt-2">
               @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-                @if (loginForm.get('password')?.hasError('required')) {
-                  <span
-                    class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold"
-                  >
-                    Required
-                  </span>
-                }
+              @if (loginForm.get('password')?.hasError('required')) {
+              <span
+                class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                Required
+              </span>
+              }
               }
             </div>
 
@@ -139,41 +113,35 @@
             } -->
           </div>
           <div class="mt-3 text-end">
-            <a
-              routerLink="/forget-password"
-              class="rounded-sm font-extrabold text-ink underline decoration-2 underline-offset-4 hover:bg-primary"
-              >Forgot password?</a
-            >
+            <a routerLink="/forget-password"
+              class="rounded-sm font-extrabold text-ink underline decoration-2 underline-offset-4 hover:bg-primary">Forgot
+              password?</a>
           </div>
           <!-- Login Button -->
-          <button
-            type="submit"
-            class="mt-5 inline-flex min-h-12 w-full cursor-pointer items-center justify-center rounded-control border-3 border-line bg-primary px-5 py-3 text-button font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50"
-          >
+          <button type="submit"
+            class="mt-5 inline-flex min-h-12 w-full cursor-pointer items-center justify-center rounded-control border-3 border-line bg-primary px-5 py-3 text-button font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-50">
             Log in
             @if (loading()) {
-              <i class="fa-solid fa-spinner fa-spin-pulse"></i>
+            <i class="fa-solid fa-spinner fa-spin-pulse"></i>
             }
           </button>
 
           @if (loginSuccessMessage()) {
-            <p class="mt-2.5">
-              <span
-                class="inline-block rounded-chip border-brutal-thin bg-pop-mint px-1.5 font-mono text-caption font-bold"
-              >
-                {{ loginSuccessMessage() }}
-              </span>
-            </p>
+          <p class="mt-2.5">
+            <span
+              class="inline-block rounded-chip border-brutal-thin bg-pop-mint px-1.5 font-mono text-caption font-bold">
+              {{ loginSuccessMessage() }}
+            </span>
+          </p>
           }
 
           @if (loginErrorMessage()) {
-            <p class="mt-2.5">
-              <span
-                class="inline-block rounded-chip border-brutal-thin bg-pop-pink px-1.5 font-mono text-caption font-bold"
-              >
-                {{ loginErrorMessage() }}
-              </span>
-            </p>
+          <p class="mt-2.5">
+            <span
+              class="inline-block rounded-chip border-brutal-thin bg-pop-pink px-1.5 font-mono text-caption font-bold">
+              {{ loginErrorMessage() }}
+            </span>
+          </p>
           }
 
           <!-- Secondary Actions -->
@@ -181,10 +149,8 @@
             <!-- Return to Register -->
             <p class="auth-footer mt-3 text-center font-semibold">
               New Here?
-              <a
-                routerLink="/register"
-                class="rounded-sm font-extrabold text-ink underline decoration-2 underline-offset-4 hover:bg-primary"
-              >
+              <a routerLink="/register"
+                class="rounded-sm font-extrabold text-ink underline decoration-2 underline-offset-4 hover:bg-primary">
                 Create account
               </a>
             </p>
