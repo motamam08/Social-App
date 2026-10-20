@@ -54,4 +54,12 @@ export class LoginComponent {
       });
     }
   }
+
+  showPassword(passwordElement: HTMLInputElement) {
+    if (passwordElement.type == 'password') {
+      passwordElement.type = 'text'
+    } else {
+      passwordElement.type = 'password'
+    }
+  }
 }

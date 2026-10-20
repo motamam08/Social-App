@@ -7,20 +7,17 @@
       POP<span class="ml-1 rounded-chip bg-ink px-1.5 text-primary">BLOCK</span>
     </a>
 
-    <!-- Middle · primary links (drops under logo/account on small screens) -->
-    <nav class="order-last flex w-full flex-wrap items-center justify-center gap-2 desk:order-0 desk:w-auto">
+    <nav aria-label="Primary navigation" class="hidden items-center justify-center gap-2 desk:flex">
       <a routerLink="/feed" routerLinkActive=" bg-primary hover:bg-primary shadow-brutal-sm border-brutal"
-        class="inline-flex items-center rounded-control  border-transparent px-3 py-2 text-small font-extrabold text-ink no-underline hover:bg-canvas  focus-visible:outline-offset-3 focus-visible:outline-ink desk:px-4 desk:py-2.5 desk:text-base">
+        class="inline-flex min-h-11 items-center whitespace-nowrap rounded-control border-transparent px-4 py-2.5 text-base font-extrabold text-ink no-underline hover:bg-canvas focus-visible:outline-offset-3 focus-visible:outline-ink">
         Feed
       </a>
-
       <a routerLink="/profile" routerLinkActive=" bg-primary hover:bg-primary shadow-brutal-sm border-brutal"
-        class="inline-flex items-center rounded-control  border-transparent px-3 py-2 text-small font-extrabold text-ink no-underline hover:bg-canvas  focus-visible:outline-offset-3 focus-visible:outline-ink desk:px-4 desk:py-2.5 desk:text-base">
+        class="inline-flex min-h-11 items-center whitespace-nowrap rounded-control border-transparent px-4 py-2.5 text-base font-extrabold text-ink no-underline hover:bg-canvas focus-visible:outline-offset-3 focus-visible:outline-ink">
         Profile
       </a>
-
       <a routerLink="/notifaction" routerLinkActive=" bg-primary hover:bg-primary shadow-brutal-sm border-brutal"
-        class="inline-flex items-center rounded-control  border-transparent px-3 py-2 text-small font-extrabold text-ink no-underline hover:bg-canvas  focus-visible:outline-offset-3 focus-visible:outline-ink desk:px-4 desk:py-2.5 desk:text-base">
+        class="inline-flex min-h-11 items-center whitespace-nowrap rounded-control border-transparent px-4 py-2.5 text-base font-extrabold text-ink no-underline hover:bg-canvas focus-visible:outline-offset-3 focus-visible:outline-ink">
         Notifications
         <span
           class="ml-1.5 inline-block rounded-full border-2 border-line bg-accent px-1.75 text-caption font-bold text-ink">3<span
@@ -28,47 +25,117 @@
       </a>
     </nav>
 
-    <!-- Right · account dropdown (native disclosure, no JavaScript needed) -->
-    <details id="account-menu" class="group relative justify-self-end">
+    <details id="desktop-account-menu" class="group relative hidden justify-self-end desk:block">
       <summary
         class="flex cursor-pointer list-none items-center gap-2.5 rounded-control border-3 border-line bg-surface py-1.5 pr-3 pl-1.5 shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop select-none hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs group-open:translate-x-0.5 group-open:translate-y-0.5 group-open:shadow-brutal-xs focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none [&::-webkit-details-marker]:hidden">
-        <!-- Replace src with the signed-in user's photo -->
         <img
           src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23FFD93D'/%3E%3Ctext x='20' y='26' font-family='sans-serif' font-weight='800' font-size='16' text-anchor='middle' fill='%23111'%3EYO%3C/text%3E%3C/svg%3E"
           alt="" width="36" height="36" class="size-9 shrink-0 rounded-full border-3 border-line object-cover" />
         <span class="max-w-28 truncate font-bold text-ink">Your Name</span>
         <svg
           class="size-4 shrink-0 transition-transform duration-100 group-open:rotate-180 motion-reduce:transition-none"
-          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square">
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"
+          aria-hidden="true">
           <path d="M5 9l7 7 7-7" />
         </svg>
       </summary>
-
       <div
         class="absolute right-0 z-20 mt-3 w-60 rounded-card border-3 border-line bg-surface p-2 text-ink shadow-brutal-lg">
         <div class="px-3 py-2">
           <p class="font-extrabold">Your Name</p>
           <p class="font-mono text-label font-bold">&#64;yourname</p>
         </div>
-
         <hr class="my-2 border-0 border-t-2 border-dashed border-line" />
-
         <ul class="m-0 list-none p-0">
           <li>
             <a routerLink="/change-password"
-              class="flex w-full items-center rounded-control border-3 border-transparent px-3 py-2.5 font-bold text-ink no-underline hover:border-line hover:bg-primary focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
+              class="flex min-h-11 w-full items-center rounded-control border-3 border-transparent px-3 py-2.5 font-bold text-ink no-underline hover:border-line hover:bg-primary focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
               Change Password
             </a>
           </li>
           <li>
-
-            <button type="submit"
-              class="flex w-full cursor-pointer items-center rounded-control border-3 border-transparent bg-transparent px-3 py-2.5 text-left font-sans text-base font-bold text-ink hover:border-line hover:bg-accent focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
+            <button (click)="navBarSignOut()"
+              class="flex min-h-11 w-full cursor-pointer items-center rounded-control border-3 border-transparent bg-transparent px-3 py-2.5 text-left font-sans text-base font-bold text-ink hover:border-line hover:bg-accent focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
               Sign out
             </button>
-
           </li>
         </ul>
+      </div>
+    </details>
+
+    <details #navigationMenu class="mobile-nav-drawer relative ml-auto desk:hidden">
+      <summary aria-label="Toggle navigation menu"
+        class="flex size-11 cursor-pointer list-none items-center justify-center rounded-control border-3 border-line bg-surface text-ink shadow-brutal-sm focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink [&::-webkit-details-marker]:hidden">
+        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+          stroke-linecap="square" aria-hidden="true">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </summary>
+
+      <div class="mobile-nav-content">
+        <nav aria-label="Primary navigation" class="flex w-full flex-col items-stretch gap-2">
+          <a routerLink="/feed" routerLinkActive=" bg-primary hover:bg-primary shadow-brutal-sm border-brutal"
+            (click)="navigationMenu.open = false"
+            class="inline-flex min-h-11 w-full items-center whitespace-nowrap rounded-control border-transparent px-3 py-2 text-small font-extrabold text-ink no-underline hover:bg-canvas focus-visible:outline-offset-3 focus-visible:outline-ink desk:w-auto desk:px-4 desk:py-2.5 desk:text-base">
+            Feed
+          </a>
+
+          <a routerLink="/profile" routerLinkActive=" bg-primary hover:bg-primary shadow-brutal-sm border-brutal"
+            (click)="navigationMenu.open = false"
+            class="inline-flex min-h-11 w-full items-center whitespace-nowrap rounded-control border-transparent px-3 py-2 text-small font-extrabold text-ink no-underline hover:bg-canvas focus-visible:outline-offset-3 focus-visible:outline-ink desk:w-auto desk:px-4 desk:py-2.5 desk:text-base">
+            Profile
+          </a>
+
+          <a routerLink="/notifaction" routerLinkActive=" bg-primary hover:bg-primary shadow-brutal-sm border-brutal"
+            (click)="navigationMenu.open = false"
+            class="inline-flex min-h-11 w-full items-center whitespace-nowrap rounded-control border-transparent px-3 py-2 text-small font-extrabold text-ink no-underline hover:bg-canvas focus-visible:outline-offset-3 focus-visible:outline-ink desk:w-auto desk:px-4 desk:py-2.5 desk:text-base">
+            Notifications
+            <span
+              class="ml-1.5 inline-block rounded-full border-2 border-line bg-accent px-1.75 text-caption font-bold text-ink">3<span
+                class="sr-only"> unread</span></span>
+          </a>
+        </nav>
+
+        <details id="mobile-account-menu" class="mobile-account-menu group relative w-full">
+          <summary
+            class="flex min-h-11 w-full cursor-pointer list-none items-center justify-between gap-2.5 rounded-control border-3 border-line bg-surface py-1.5 pr-3 pl-1.5 shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop select-none hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs group-open:translate-x-0.5 group-open:translate-y-0.5 group-open:shadow-brutal-xs focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none desk:w-auto [&::-webkit-details-marker]:hidden">
+            <!-- Replace src with the signed-in user's photo -->
+            <img
+              src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%23FFD93D'/%3E%3Ctext x='20' y='26' font-family='sans-serif' font-weight='800' font-size='16' text-anchor='middle' fill='%23111'%3EYO%3C/text%3E%3C/svg%3E"
+              alt="" width="36" height="36" class="size-9 shrink-0 rounded-full border-3 border-line object-cover" />
+            <span class="max-w-28 truncate font-bold text-ink">Your Name</span>
+            <svg
+              class="size-4 shrink-0 transition-transform duration-100 group-open:rotate-180 motion-reduce:transition-none"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square">
+              <path d="M5 9l7 7 7-7" />
+            </svg>
+          </summary>
+
+          <div
+            class="mobile-account-dropdown absolute right-0 z-20 mt-3 w-60 rounded-card border-3 border-line bg-surface p-2 text-ink shadow-brutal-lg">
+            <div class="px-3 py-2">
+              <p class="font-extrabold">Your Name</p>
+              <p class="font-mono text-label font-bold">&#64;yourname</p>
+            </div>
+
+            <hr class="my-2 border-0 border-t-2 border-dashed border-line" />
+
+            <ul class="m-0 list-none p-0">
+              <li>
+                <a routerLink="/change-password" (click)="navigationMenu.open = false"
+                  class="flex min-h-11 w-full items-center rounded-control border-3 border-transparent px-3 py-2.5 font-bold text-ink no-underline hover:border-line hover:bg-primary focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
+                  Change Password
+                </a>
+              </li>
+              <li>
+                <button type="submit" (click)="navigationMenu.open = false"
+                  class="flex min-h-11 w-full cursor-pointer items-center rounded-control border-3 border-transparent bg-transparent px-3 py-2.5 text-left font-sans text-base font-bold text-ink hover:border-line hover:bg-accent focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
+                  Sign out
+                </button>
+              </li>
+            </ul>
+          </div>
+        </details>
       </div>
     </details>
   </div>

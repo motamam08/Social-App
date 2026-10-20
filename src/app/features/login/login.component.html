@@ -94,8 +94,20 @@
                 Password
               </label>
 
-              <input id="password" name="password" formControlName="password" type="password"
-                placeholder="Enter your password" required class="form-control" />
+              <div class="relative">
+                <input #passInput id="password" name="password" formControlName="password" type="password"
+                  placeholder="Enter your password" required class="form-control" />
+                @if (passInput.type == "password") {
+                <div (click)="showPassword(passInput)" class="absolute top-1/2 -translate-y-1/2 right-4 cursor-pointer">
+                  <i class="fa-regular fa-eye"></i>
+                </div>
+                }
+                @if (passInput.type == "text") {
+                <div (click)="showPassword(passInput)" class="absolute top-1/2 -translate-y-1/2 right-4 cursor-pointer">
+                  <i class="fa-regular fa-eye-slash"></i>
+                </div>
+                }
+              </div>
             </div>
             <div class="mt-2">
               @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {

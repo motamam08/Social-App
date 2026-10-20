@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AuthService } from './../../../../core/auth/services/auth.service';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -8,18 +9,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-  // isDropdownOpen = false;
+  private readonly authService = inject(AuthService);
 
-  // user = {
-  //   name: 'Mohamed Tamam',
-  //   image: 'assets/images/avatar.jpg',
-  // };
-
-  // toggleDropdown(): void {
-  //   this.isDropdownOpen = !this.isDropdownOpen;
-  // }
-
-  // closeDropdown(): void {
-  //   this.isDropdownOpen = false;
-  // }
+  navBarSignOut() {
+    this.authService.signOut()
+  }
 }
