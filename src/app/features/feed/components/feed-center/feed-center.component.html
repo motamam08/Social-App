@@ -4,97 +4,176 @@
         class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
         <h2 id="composer-title" class="sr-only">Create a post</h2>
 
-        <form action="/posts" method="post">
+        <form #createPostForm (submit)="createPost($event, createPostForm, postPhoto)">
             <div class="flex items-start gap-3">
-                <div aria-hidden="true"
-                    class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-yellow font-extrabold text-ink">
-                    YO
+                <div
+                    class="flex size-11.5 shrink-0 overflow-hidden items-center justify-center rounded-full border-3 border-line bg-pop-yellow font-extrabold text-ink">
+                    <img class="w-full" [src]="user.photo" [alt]="user.name">
                 </div>
 
                 <div class="min-w-0 flex-1">
+                    <div class="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <p class="font-extrabold text-ink">{{ user.name }}</p>
+                        <label for="post-privacy" class="sr-only">Post privacy</label>
+                        <select id="post-privacy" name="privacy" [formControl]="privacyInput"
+                            class="cursor-pointer rounded-control border border-line/30 bg-canvas py-1 pl-2 pr-6 text-small font-semibold text-ink/75 transition-colors hover:bg-pop-yellow/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                            <option value="public">Public</option>
+                            <option value="friends">Friends</option>
+                            <option value="only_me">Only me</option>
+                        </select>
+                    </div>
                     <label for="post-body" class="sr-only">What is poppin today?</label>
-                    <textarea id="post-body" name="body" rows="3" maxlength="280" required
-                        placeholder="What is poppin today?"
-                        class="min-h-12 w-full resize-none rounded-control border-3 border-line bg-surface px-3.5 py-3 font-sans text-base font-semibold text-ink placeholder:font-medium placeholder:text-ink/50 focus:shadow-brutal-focus focus:outline-none"></textarea>
+                    <textarea [formControl]="bodyInput" id="post-body" name="body" rows="3" maxlength="280" required
+                        placeholder="What is poppin today {{user.name}}?"
+                        class="min-h-12 w-full scrollbarHiddin resize-y rounded-control border-3 border-line bg-surface px-3.5 py-3 font-sans text-base font-semibold text-ink placeholder:font-medium placeholder:text-ink/50 focus:shadow-brutal-focus focus:outline-none"></textarea>
                 </div>
             </div>
+            @if(imgToDisplay()){
+            <div class="relative my-2">
+                <img class="w-full h-62.5 object-cover" [src]="imgToDisplay()" alt="">
+                <div class="absolute right-2 top-2 fa-xl cursor-pointer bg-accent rounded-full overflow-hidden">
+                    <i (click)="resetImg(postPhoto)" class="fa-regular fa-circle-xmark "></i>
+                </div>
+            </div>
+            }
 
-            <div class="mt-3.5 flex items-center justify-between gap-3">
+            <div class="mt-3.5 flex flex-wrap items-center justify-between gap-3">
                 <!-- A real file picker: the label is the button, the input stays accessible -->
                 <label for="post-photo"
                     class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none has-focus-visible:outline-3 has-focus-visible:outline-offset-3 has-focus-visible:outline-ink motion-reduce:transition-none">
                     Add photo
-                    <input id="post-photo" name="photo" type="file" accept="image/*" class="sr-only" />
+                    <input #postPhoto id="post-photo" name="photo" type="file" accept="image/*" class="sr-only"
+                        (change)="selectImg($event)" />
                 </label>
 
-                <button type="submit"
-                    class="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-accent px-5 py-3 font-sans text-button font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
-                    Post it
-                </button>
+                <div class="ml-auto flex flex-wrap items-center justify-end gap-3">
+                    <button type="submit" [disabled]="posting()"
+                        class="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-accent px-5 py-3 font-sans text-button font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                        {{ posting() ? 'Posting…' : 'Post it' }}
+                    </button>
+                </div>
             </div>
+            @if (postSubmissionError()) {
+            <p role="alert" class="mt-3 font-bold text-ink">{{ postSubmissionError() }}</p>
+            }
         </form>
     </section>
 
     <!-- Posts -->
     <section aria-label="Posts" class="flex flex-col gap-6">
+        @if (likeError()) {
+        <p role="alert" class="rounded-card border-3 border-line bg-surface p-4 font-bold text-ink">
+            {{ likeError() }}
+        </p>
+        }
+        @if (postsError()) {
+        <p role="alert" class="rounded-card border-3 border-line bg-surface p-4 font-bold text-ink">
+            {{ postsError() }}
+        </p>
+        }
         <!-- Post 1 · with media -->
-        <article class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
-            <header class="flex items-center gap-3">
+        @for (post of allPosts(); track post._id) {
+        <article class="rounded-card border-3 border-line bg-surface  text-ink shadow-brutal-lg">
+            <header class="relative flex items-center gap-3 p-4">
                 <div aria-hidden="true"
-                    class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-pink font-extrabold text-ink">
-                    MP
+                    class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line  font-extrabold text-ink overflow-hidden">
+                    <img [src]="post.user.photo" alt="" class="w-full">
                 </div>
-                <div>
-                    <a href="/u/minamakes"
-                        class="font-bold text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">Mina
-                        Park</a>
-                    <div class="font-mono text-label font-bold">
-                        <time datetime="2026-10-19T09:48:00Z">12m ago</time>
+                <div class="">
+                    <a [href]="'/u/' + post.user.username"
+                        class="font-bold text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">{{post.user.name}}</a>
+                    <div class=" gap-2  flex justify-between items-center">
+                        <span class="text-label  font-semibold "> @{{post.user.username}}-</span>
+                        <time class="font-bold text-label text-gray-400">{{post.createdAt}}</time>
+                        <p class="text-label font-semibold font-mono ">{{post.privacy}}</p>
                     </div>
                 </div>
-                <span
-                    class="ml-auto inline-block rounded-full border-2 border-line bg-pop-mint px-2.5 py-0.75 font-mono text-caption font-bold text-ink">design</span>
+                <div class="relative ml-auto">
+                    <button type="button" aria-label="Post options" aria-haspopup="menu"
+                        [attr.aria-expanded]="openPostMenu() === post._id" (click)="togglePostMenu(post._id)"
+                        class="flex size-10 cursor-pointer items-center justify-center rounded-full border-2 border-line bg-surface text-ink hover:bg-pop-yellow focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                        <svg class="size-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <circle cx="5" cy="12" r="1.8" />
+                            <circle cx="12" cy="12" r="1.8" />
+                            <circle cx="19" cy="12" r="1.8" />
+                        </svg>
+                    </button>
+                    @if (openPostMenu() === post._id) {
+                    <div role="menu" aria-label="Post options"
+                        class="absolute right-0 top-full z-10 mt-2 flex min-w-40 flex-col overflow-hidden rounded-control border-2 border-line bg-surface p-1.5 text-ink shadow-brutal-md">
+                        @if(post.user._id == user._id){
+                        <button (click)="startEditing(post)" type="button" role="menuitem"
+                            class="cursor-pointer rounded-control px-3 py-2 text-left text-small font-bold hover:bg-pop-yellow focus-visible:outline-3 focus-visible:outline-ink">
+                            Edit
+                        </button>
+                        <button (click)="deletePost(post._id)" type="button" role="menuitem"
+                            class="cursor-pointer rounded-control px-3 py-2 text-left text-small font-bold hover:bg-pop-pink/30 focus-visible:outline-3 focus-visible:outline-ink">
+                            Delete
+                        </button>
+                        }
+                        <button type="button" role="menuitem"
+                            class="cursor-pointer rounded-control px-3 py-2 text-left text-small font-bold hover:bg-pop-mint/40 focus-visible:outline-3 focus-visible:outline-ink">
+                            {{ post.bookmarked ? 'Unsave post' : 'Save post' }}
+                        </button>
+                    </div>
+                    }
+                </div>
             </header>
 
-            <p class="my-3.5 text-lead leading-snug font-medium">
-                Spent all weekend turning my old sketchbook into stickers. Thick borders, hard
-                shadows, zero regrets.
+            <p class="my-3.5 text-lead leading-snug font-medium px-4">
+                {{post.body}}
             </p>
 
-            <div aria-hidden="true"
-                class="relative block h-50 overflow-hidden rounded-control border-3 border-line bg-pop-blue">
-                <span class="absolute top-7 right-9 size-30 rounded-full border-3 border-line bg-primary"></span>
-                <span class="absolute -bottom-5 left-9 h-25 w-35 -rotate-8 border-3 border-line bg-accent"></span>
+            <div>
+                <img [src]="post.image" class="w-full" alt="">
             </div>
 
-            <footer class="mt-3.5 flex flex-wrap items-center gap-2.5">
-                <button type="button" aria-pressed="false" aria-label="Like, 248 likes"
-                    class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
-                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                        aria-hidden="true">
-                        <path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z" />
-                    </svg>
-                    248
-                </button>
-
-                <a href="/post/p1" aria-label="Comments, 32"
-                    class="inline-flex min-h-11 items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
-                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                        aria-hidden="true">
-                        <path d="M4 5h16v11H9l-5 4z" />
-                    </svg>
-                    32
-                </a>
-
-                <button type="button"
-                    class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
-                    Share
-                </button>
+            <footer class="flex flex-col gap-3 border-t-2 border-line/20 p-4">
+                <div
+                    class="flex flex-wrap items-center gap-x-4 gap-y-2 border-b-2 border-line/20 pb-3 text-small font-semibold text-ink/75">
+                    <span>{{ post.likesCount }} likes</span>
+                    <a [href]="'/post/' + post._id + '#comments'"
+                        class="text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
+                        {{ post.commentsCount }} comments
+                    </a>
+                    <span>{{ post.sharesCount }} shares</span>
+                    <a [routerLink]='["/post-details", post._id]'
+                        class="ml-auto font-extrabold text-ink underline decoration-2 underline-offset-2 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
+                        Post details
+                    </a>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <button (click)="likePost(post._id)" type="button"
+                        [attr.aria-label]="'Like post, ' + post.likesCount + ' likes'"
+                        class="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-surface px-3 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none hover:bg-pop-pink/30">
+                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                            aria-hidden="true">
+                            <path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z" />
+                        </svg>
+                        Like
+                    </button>
+                    <button #commentsButton
+                        class="inline-flex cursor-pointer min-h-11 items-center justify-center gap-2 rounded-control border-3 border-line bg-surface px-3 py-2 text-small font-extrabold text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none hover:bg-pop-blue/30">
+                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                            aria-hidden="true">
+                            <path d="M4 5h16v11H9l-5 4z" />
+                        </svg>
+                        Comment
+                    </button>
+                    <button type="button"
+                        class="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-surface px-3 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none hover:bg-pop-mint/40">
+                        Share
+                    </button>
+                </div>
             </footer>
+            @defer (on interaction(commentsButton)) {
+            <app-comments [postId]="post._id"></app-comments>
+            }
         </article>
+        }
 
         <!-- Post 2 · text only -->
-        <article class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
+        <!-- <article class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
             <header class="flex items-center gap-3">
                 <div aria-hidden="true"
                     class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-mint font-extrabold text-ink">
@@ -140,10 +219,10 @@
                     Share
                 </button>
             </footer>
-        </article>
+        </article> -->
 
         <!-- Post 3 · already liked (filled heart, aria-pressed="true") -->
-        <article class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
+        <!-- <article class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
             <header class="flex items-center gap-3">
                 <div aria-hidden="true"
                     class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-pink font-extrabold text-ink">
@@ -189,6 +268,80 @@
                     Share
                 </button>
             </footer>
-        </article>
+        </article> -->
     </section>
+
+    @if (editingPost(); as post) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 p-4" (click)="cancelEditing()">
+        <section role="dialog" aria-modal="true" aria-labelledby="edit-post-title"
+            class="max-h-[90dvh] w-full max-w-xl overflow-y-auto rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg"
+            (click)="$event.stopPropagation()">
+            <div class="mb-4 flex items-center justify-between gap-4">
+                <h2 id="edit-post-title" class="text-subhead font-extrabold">Edit post</h2>
+                <button type="button" aria-label="Close edit post dialog"
+                    class="flex size-10 cursor-pointer items-center justify-center rounded-full border-2 border-line bg-surface font-bold hover:bg-pop-yellow focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                    (click)="cancelEditing(editPhoto)">
+                    ×
+                </button>
+            </div>
+
+            <form (submit)="$event.preventDefault(); updatePost(editPhoto)">
+                <div class="mb-3 flex items-center gap-3">
+                    <img [src]="post.user.photo" [alt]="post.user.name"
+                        class="size-11.5 rounded-full border-3 border-line object-cover">
+                    <div class="min-w-0 flex-1">
+                        <p class="font-extrabold">{{ post.user.name }}</p>
+                        <label [attr.for]="'edit-privacy-' + post._id" class="sr-only">Post privacy</label>
+                        <select [id]="'edit-privacy-' + post._id" [formControl]="editPrivacyInput"
+                            class="cursor-pointer rounded-control border border-line/30 bg-canvas py-1 pl-2 pr-6 text-small font-semibold text-ink/75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
+                            <option value="public">Public</option>
+                            <option value="friends">Friends</option>
+                            <option value="only_me">Only me</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label [attr.for]="'edit-body-' + post._id" class="sr-only">Post text</label>
+                <textarea [id]="'edit-body-' + post._id" [formControl]="editBodyInput" rows="4" maxlength="280" required
+                    class="min-h-28 w-full resize-y rounded-control border-3 border-line bg-surface px-3.5 py-3 font-sans text-base font-semibold text-ink focus:shadow-brutal-focus focus:outline-none"></textarea>
+
+                @if (editImagePreview() || post.image) {
+                <div class="relative my-3">
+                    <img [src]="editImagePreview() || post.image" alt="Post image preview"
+                        class="max-h-72 w-full rounded-control object-cover">
+                    @if (editImagePreview()) {
+                    <button type="button" aria-label="Remove replacement image"
+                        class="absolute right-2 top-2 rounded-full border-2 border-line bg-surface px-3 py-1 font-bold shadow-brutal-sm"
+                        (click)="resetEditImage(editPhoto)">
+                        Remove new image
+                    </button>
+                    }
+                </div>
+                }
+
+                <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+                    <label for="edit-post-photo"
+                        class="inline-flex min-h-11 cursor-pointer items-center rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold shadow-brutal-sm focus-within:outline-3 focus-within:outline-offset-3 focus-within:outline-ink">
+                        Replace photo
+                        <input #editPhoto id="edit-post-photo" type="file" accept="image/*" class="sr-only"
+                            (change)="selectEditImage($event)">
+                    </label>
+                    <div class="ml-auto flex gap-3">
+                        <button type="button" [disabled]="posting()" (click)="cancelEditing(editPhoto)"
+                            class="inline-flex min-h-11 cursor-pointer items-center rounded-control border-3 border-line bg-surface px-4 py-2 font-bold shadow-brutal-sm disabled:cursor-not-allowed disabled:opacity-60">
+                            Cancel
+                        </button>
+                        <button type="submit" [disabled]="posting()"
+                            class="inline-flex min-h-11 cursor-pointer items-center rounded-control border-3 border-line bg-accent px-4 py-2 font-extrabold shadow-brutal-sm disabled:cursor-not-allowed disabled:opacity-60">
+                            {{ posting() ? 'Saving…' : 'Save changes' }}
+                        </button>
+                    </div>
+                </div>
+                @if (editError()) {
+                <p role="alert" class="mt-3 font-bold">{{ editError() }}</p>
+                }
+            </form>
+        </section>
+    </div>
+    }
 </main>

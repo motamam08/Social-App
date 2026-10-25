@@ -11,6 +11,16 @@ export class AuthService {
   private readonly httpClient = inject(HttpClient);
   private readonly router = inject(Router);
 
+  private get authOptions() {
+    return {
+      headers: {
+        AUTHORIZATION: `Bearer ${localStorage.getItem('socialToken')} ?? ''`,
+      },
+    };
+  }
+
+
+
   register(data: object): Observable<any> {
     return this.httpClient.post(`${environment.baseUrl}users/signup`, data);
   }
@@ -23,5 +33,13 @@ export class AuthService {
     localStorage.removeItem('socialToken')
     localStorage.removeItem('userData')
     this.router.navigate(['/login'])
+  }
+
+  changePassword(body: { password: string; newPassword: string }): Observable<unknown> {
+    return this.httpClient.patch(
+      `${environment.baseUrl}users/change-password`,
+      body,
+      this.authOptions,
+    );
   }
 }

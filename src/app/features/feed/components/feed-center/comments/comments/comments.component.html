@@ -1,0 +1,194 @@
+<main class="mx-auto max-w-content px-4 py-4 desk:px-8">
+    <!-- ═══════════════════════ COMMENTS START ═══════════════════════ -->
+    <section aria-labelledby="comments-title" class="flex flex-col gap-2.5">
+        @if (commentsError()) {
+        <p role="alert" class="font-bold text-ink">{{ commentsError() }}</p>
+        }
+        <h2 id="comments-title" class="flex items-center gap-3 text-subhead leading-tight font-extrabold">
+            Comments
+            <span
+                class="inline-block rounded-full border-2 border-line bg-pop-yellow px-2.5 py-0.75 font-mono text-caption font-bold text-ink">{{commentsData().length}}</span>
+        </h2>
+
+        <!-- ═════════ Comment list ═════════ -->
+        <!--
+          Reply toggle is CSS-only: the sr-only checkbox is the `peer`; the "Reply" label flips it
+          and the reply form (hidden → flex) appears under the buttons. In Angular, replace the
+          checkbox with a signal and @if.
+          Every checkbox/label/form id must be unique (reply-toggle-c1, reply-toggle-c2, …).
+        -->
+        <ul class="m-0 flex list-none flex-col gap-4.5 p-0">
+            <!-- ───── Comment 1 · text only · has one reply ───── -->
+            @for (comment of commentsData(); track comment._id) {
+            <li>
+                <article class="rounded-card border-3 border-line bg-surface p-4 text-ink shadow-brutal-md">
+                    <header class="flex items-center gap-3">
+                        <div aria-hidden="true"
+                            class="flex overflow-hidden size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-mint font-extrabold text-ink">
+                            <img [src]="comment.commentCreator.photo" alt="">
+                        </div>
+                        <div class="min-w-0">
+                            <a [href]="'/u/' + comment.commentCreator.username"
+                                class="block truncate font-bold text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">{{comment.commentCreator.name}}</a>
+                            <p class="font-mono text-label font-bold">
+                                @{{comment.commentCreator.username}}
+                            </p>
+                        </div>
+                    </header>
+
+                    <p class="mt-3 leading-snug font-medium">{{comment.content}}</p>
+
+                    <footer class="mt-3.5 flex flex-wrap items-center gap-2.5">
+                        <input [id]="'reply-toggle-' + comment._id" type="checkbox" class="peer sr-only" />
+
+                        <div
+                            class="flex flex-wrap items-center gap-x-4 gap-y-2 pb-3 text-small font-semibold text-ink/75">
+                            <span>{{ comment.likes.length }} likes</span>
+                            <label [for]="'reply-toggle-' + comment._id"
+                                class="cursor-pointer text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
+                                Reply ({{ comment.repliesCount }})
+                            </label>
+
+
+                        </div>
+
+                        <form class="hidden w-full basis-full items-center gap-2.5 peer-checked:flex">
+                            <label [attr.for]="'reply-body-' + comment._id" class="sr-only">
+                                Reply to {{ comment.commentCreator.name }}
+                            </label>
+                            <input [id]="'reply-body-' + comment._id" name="body" type="text" maxlength="500" required
+                                placeholder="Reply to Jo..."
+                                class="min-h-11 min-w-0 flex-1 rounded-control border-3 border-line bg-surface px-3.5 py-2 font-sans text-base font-semibold text-ink placeholder:font-medium placeholder:text-ink/50 focus:shadow-brutal-focus focus:outline-none" />
+                            <button type="submit"
+                                class="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-control border-3 border-line bg-accent px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                                Send
+                            </button>
+                        </form>
+                    </footer>
+                </article>
+
+                <!-- Replies: one level of nesting, indented with a dashed rail -->
+                <!-- <ul
+                    class="m-0 mt-4 ml-4 flex list-none flex-col gap-4 border-l-3 border-dashed border-line p-0 pl-4 desk:ml-8">
+                    <li>
+                        <article class="rounded-card border-3 border-line bg-surface p-4 text-ink shadow-brutal-md">
+                            <header class="flex items-center gap-3">
+                                <div aria-hidden="true"
+                                    class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-pink font-extrabold text-ink">
+                                    MP</div>
+                                <div class="min-w-0">
+                                    <a href="/u/minamakes"
+                                        class="block truncate font-bold text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">Mina
+                                        Park</a>
+                                    <p class="font-mono text-label font-bold">
+                                        &#64;minamakes &middot; <time datetime="2026-10-21T09:57:00Z">3m ago</time>
+                                    </p>
+                                </div>
+                            </header>
+
+                            <p class="mt-3 leading-snug font-medium">Friday! I will post the preview tonight.</p>
+
+                            <footer class="mt-3.5 flex flex-wrap items-center gap-2.5">
+                                <input id="reply-toggle-c1r1" type="checkbox" class="peer sr-only" />
+
+                                <button type="button" aria-pressed="false" aria-label="Like, 4 likes"
+                                    class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" aria-hidden="true">
+                                        <path
+                                            d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z" />
+                                    </svg>
+                                    4
+                                </button>
+
+                                <label for="reply-toggle-c1r1"
+                                    class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop select-none hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none peer-checked:bg-primary peer-focus-visible:outline-3 peer-focus-visible:outline-offset-3 peer-focus-visible:outline-ink motion-reduce:transition-none">
+                                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" aria-hidden="true">
+                                        <path d="M4 5h16v11H9l-5 4z" />
+                                    </svg>
+                                    Reply
+                                </label>
+
+                                <form action="/comments/c1/replies" method="post"
+                                    class="hidden w-full basis-full items-center gap-2.5 peer-checked:flex">
+                                    <label for="reply-body-c1r1" class="sr-only">Reply to Mina Park</label>
+                                    <input id="reply-body-c1r1" name="body" type="text" maxlength="500" required
+                                        placeholder="Reply to Mina..."
+                                        class="min-h-11 min-w-0 flex-1 rounded-control border-3 border-line bg-surface px-3.5 py-2 font-sans text-base font-semibold text-ink placeholder:font-medium placeholder:text-ink/50 focus:shadow-brutal-focus focus:outline-none" />
+                                    <button type="submit"
+                                        class="inline-flex min-h-11 shrink-0 cursor-pointer items-center rounded-control border-3 border-line bg-accent px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                                        Send
+                                    </button>
+                                </form>
+                            </footer>
+                        </article>
+                    </li>
+                </ul> -->
+            </li>
+            }
+
+
+        </ul>
+
+        <!-- ═════════ Create a comment (text + image) ═════════ -->
+        <div class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
+            <form>
+                <div class="flex items-start gap-3">
+                    <div aria-hidden="true"
+                        class="overflow-hidden flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-yellow font-extrabold text-ink">
+                        @if (currentUser(); as user) {
+                        <img class="w-full h-full object-cover" [src]="user.photo" [alt]="user.name">
+                        }
+                    </div>
+
+                    <div class="min-w-0 flex-1">
+                        @if (currentUser(); as user) {
+                        <p class="mb-2 font-extrabold text-ink">{{ user.name }}</p>
+                        }
+                        <label for="comment-body" class="sr-only">Add a comment</label>
+                        <textarea id="comment-body" name="body" rows="1" maxlength="500" required
+                            placeholder="Add a comment..."
+                            class=" w-full resize-none rounded-control border-3 border-line bg-surface px-3.5 py-3 font-sans text-base font-semibold text-ink placeholder:font-medium placeholder:text-ink/50 focus:shadow-brutal-focus focus:outline-none"></textarea>
+
+                        <!-- Image preview: hidden until a file is picked (see the preview script at the bottom) -->
+                        <figure id="comment-image-preview" class="relative mt-3 hidden w-fit max-w-full">
+                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                alt="Selected image preview"
+                                class="max-h-48 max-w-full rounded-control border-3 border-line object-cover" />
+                            <button id="comment-image-remove" type="button" aria-label="Remove image"
+                                class="absolute -top-3 -right-3 inline-flex size-8 cursor-pointer items-center justify-center rounded-full border-3 border-line bg-accent text-ink shadow-brutal-xs focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="3" aria-hidden="true">
+                                    <path d="M6 6l12 12M18 6L6 18" />
+                                </svg>
+                            </button>
+                        </figure>
+                    </div>
+                </div>
+
+                <div class="mt-3.5 flex items-center justify-between gap-3">
+                    <!-- Real file picker: the label is the button, the input stays keyboard-accessible -->
+                    <label for="comment-image"
+                        class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none has-focus-visible:outline-3 has-focus-visible:outline-offset-3 has-focus-visible:outline-ink motion-reduce:transition-none">
+                        <svg class="size-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" aria-hidden="true">
+                            <path d="M3 5h18v14H3z" />
+                            <circle cx="9" cy="10" r="2" />
+                            <path d="M3 17l6-5 4 3 3-2 5 4" />
+                        </svg>
+                        Add image
+                        <input id="comment-image" name="image" type="file" accept="image/*" class="sr-only" />
+                    </label>
+
+                    <button type="submit"
+                        class="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-accent px-5 py-3 font-sans text-button font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                        Comment
+                    </button>
+                </div>
+            </form>
+        </div>
+
+
+    </section>
+</main>
