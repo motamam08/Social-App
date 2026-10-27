@@ -35,11 +35,19 @@ export class AuthService {
     this.router.navigate(['/login'])
   }
 
-  changePassword(body: { password: string; newPassword: string }): Observable<unknown> {
+  changePassword(body: { password: string; newPassword: string }): Observable<any> {
     return this.httpClient.patch(
       `${environment.baseUrl}users/change-password`,
       body,
       this.authOptions,
     );
+  }
+
+  userProfile(userId: string): Observable<any> {
+    return this.httpClient.get(`${environment.baseUrl}users/${userId}/profile`, this.authOptions)
+  }
+
+  getUserPosts(userId: string): Observable<any> {
+    return this.httpClient.get(`${environment.baseUrl}users/${userId}/posts`, this.authOptions)
   }
 }
