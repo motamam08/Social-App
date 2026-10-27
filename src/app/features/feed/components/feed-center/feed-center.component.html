@@ -60,7 +60,7 @@
     </section>
 
     <!-- Posts -->
-    <section aria-label="Posts" class="flex flex-col gap-6">
+    <section aria-label="Posts" class="flex min-w-0 flex-col gap-6">
         @if (likeError()) {
         <p role="alert" class="rounded-card border-3 border-line bg-surface p-4 font-bold text-ink">
             {{ likeError() }}
@@ -73,18 +73,18 @@
         }
         <!-- Post 1 · with media -->
         @for (post of allPosts(); track post._id) {
-        <article class="rounded-card border-3 border-line bg-surface  text-ink shadow-brutal-lg">
-            <header class="relative flex items-center gap-3 p-4">
+        <article class="min-w-0 rounded-card border-3 border-line bg-surface text-ink shadow-brutal-lg">
+            <header class="relative flex min-w-0 items-center gap-3 p-4">
                 <div aria-hidden="true"
                     class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line  font-extrabold text-ink overflow-hidden">
                     <img [src]="post.user.photo" alt="" class="w-full">
                 </div>
-                <div class="">
+                <div class="min-w-0 flex-1">
                     <a [href]="'/u/' + post.user.username"
-                        class="font-bold text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">{{post.user.name}}</a>
-                    <div class=" gap-2  flex justify-between items-center">
-                        <span class="text-label  font-semibold "> @{{post.user.username}}-</span>
-                        <time class="font-bold text-label text-gray-400">{{post.createdAt}}</time>
+                        class="wrap-break-word font-bold text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">{{post.user.name}}</a>
+                    <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                        <span class="break-all text-label font-semibold">@{{post.user.username}}-</span>
+                        <time class="wrap-break-word font-bold text-label text-gray-400">{{post.createdAt}}</time>
                         <p class="text-label font-semibold font-mono ">{{post.privacy}}</p>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
                 </div>
             </header>
 
-            <p class="my-3.5 text-lead leading-snug font-medium px-4">
+            <p class="my-3.5 wrap-break-word px-4 text-lead font-medium leading-snug">
                 {{post.body}}
             </p>
 
@@ -128,7 +128,7 @@
                 <img [src]="post.image" class="w-full" alt="">
             </div>
 
-            <footer class="flex flex-col gap-3 border-t-2 border-line/20 p-4">
+            <footer class="flex min-w-0 flex-col gap-3 border-t-2 border-line/20 p-4">
                 <div
                     class="flex flex-wrap items-center gap-x-4 gap-y-2 border-b-2 border-line/20 pb-3 text-small font-semibold text-ink/75">
                     <span>{{ post.likesCount }} likes</span>
