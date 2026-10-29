@@ -9,7 +9,7 @@
         Loading post…
     </p>
     } @else if (errorMessage()) {
-    <p role="alert" class="rounded-card border-3 border-line bg-surface p-5 font-bold text-ink shadow-brutal-md">
+    <p role="alert" class="error-message">
         {{ errorMessage() }}
     </p>
     } @else if (postData(); as post) {
@@ -78,7 +78,7 @@
         </footer>
 
         @if (actionError()) {
-        <p role="alert" class="px-4 pb-3 font-bold text-ink">{{ actionError() }}</p>
+        <p role="alert" class="error-message mx-4 mb-3">{{ actionError() }}</p>
         }
 
         <div id="comments" class="scroll-mt-6">

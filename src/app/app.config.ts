@@ -24,7 +24,10 @@ export const appConfig: ApplicationConfig = {
       withHashLocation(),
     ),
     provideHttpClient(withFetch(), withInterceptors([headerInterceptor, errorInterceptor, loadingInterceptor])),
-    provideToastr(),
+    provideToastr({
+      closeButton: true,
+      progressBar: true,
+    }),
     importProvidersFrom(NgxSpinnerModule)
   ],
 };

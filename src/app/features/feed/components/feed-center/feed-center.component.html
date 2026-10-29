@@ -48,13 +48,15 @@
 
                 <div class="ml-auto flex flex-wrap items-center justify-end gap-3">
                     <button type="submit" [disabled]="posting()"
-                        class="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-accent px-5 py-3 font-sans text-button font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+                        class="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-info px-5 py-3 font-sans text-button font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
                         {{ posting() ? 'Posting…' : 'Post it' }}
                     </button>
                 </div>
             </div>
             @if (postSubmissionError()) {
-            <p role="alert" class="mt-3 font-bold text-ink">{{ postSubmissionError() }}</p>
+            <p role="alert" class="error-message mt-3">
+                {{
+                postSubmissionError() }}</p>
             }
         </form>
     </section>
@@ -62,12 +64,12 @@
     <!-- Posts -->
     <section aria-label="Posts" class="flex min-w-0 flex-col gap-6">
         @if (likeError()) {
-        <p role="alert" class="rounded-card border-3 border-line bg-surface p-4 font-bold text-ink">
+        <p role="alert" class="error-message">
             {{ likeError() }}
         </p>
         }
         @if (postsError()) {
-        <p role="alert" class="rounded-card border-3 border-line bg-surface p-4 font-bold text-ink">
+        <p role="alert" class="error-message">
             {{ postsError() }}
         </p>
         }
@@ -338,7 +340,7 @@
                     </div>
                 </div>
                 @if (editError()) {
-                <p role="alert" class="mt-3 font-bold">{{ editError() }}</p>
+                <p role="alert" class="error-message mt-3">{{ editError() }}</p>
                 }
             </form>
         </section>

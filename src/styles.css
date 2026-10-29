@@ -61,6 +61,22 @@
   .auth-card {
     width: 100%;
   }
+
+  .error-message {
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    border: 2px solid var(--color-line);
+    border-radius: var(--radius-chip);
+    background-color: var(--color-pop-pink);
+    padding: 0.125rem 0.375rem;
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    font-weight: 700;
+    box-shadow: var(--shadow-brutal-xs);
+  }
+
   .shadow-brutal-sm {
     --tw-shadow: 3px 3px 0 var(--tw-shadow-color, var(--color-line));
     box-shadow:
@@ -263,5 +279,112 @@
 
   .auth-card {
     padding: 1rem;
+  }
+}
+
+.toast-container .ngx-toastr {
+  width: min(24rem, calc(100vw - 2rem));
+  margin-bottom: 0.75rem;
+  padding: 1rem 2.5rem 1.25rem 3.25rem;
+  border: 3px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background-position: 1rem 1.125rem;
+  background-size: 1.25rem;
+  box-shadow: var(--shadow-brutal-lg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  opacity: 1;
+}
+
+.toast-container .ngx-toastr:hover {
+  box-shadow: var(--shadow-brutal-lg);
+  opacity: 1;
+}
+
+.toast-container .toast-success {
+  background-color: var(--color-pop-mint);
+}
+
+.toast-container .toast-error {
+  background-color: var(--color-pop-pink);
+}
+
+.toast-container .toast-info {
+  background-color: var(--color-pop-blue);
+}
+
+.toast-container .toast-warning {
+  background-color: var(--color-pop-yellow);
+}
+
+.toast-container .toast-title {
+  margin-bottom: 0.125rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.toast-container .toast-message {
+  font-size: var(--text-small);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.toast-container .toast-message a,
+.toast-container .toast-message label {
+  color: inherit;
+}
+
+.toast-container .toast-message a:hover {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.toast-container .toast-close-button {
+  top: -0.5rem;
+  right: -0.5rem;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.5rem;
+  text-shadow: none;
+  opacity: 1;
+}
+
+.toast-container .toast-close-button:hover,
+.toast-container .toast-close-button:focus {
+  color: var(--color-ink);
+  opacity: 0.65;
+}
+
+.toast-container .toast-progress {
+  height: 0.25rem;
+  background-color: var(--color-ink);
+  opacity: 0.75;
+}
+
+@media (max-width: 480px) {
+  .toast-container.toast-top-right,
+  .toast-container.toast-bottom-right {
+    right: 0.5rem;
+  }
+
+  .toast-container.toast-top-left,
+  .toast-container.toast-bottom-left {
+    left: 0.5rem;
+  }
+
+  .toast-container.toast-top-right,
+  .toast-container.toast-top-left {
+    top: 0.5rem;
+  }
+
+  .toast-container.toast-bottom-right,
+  .toast-container.toast-bottom-left {
+    bottom: 0.5rem;
+  }
+
+  .toast-container .ngx-toastr {
+    width: calc(100vw - 1rem);
   }
 }

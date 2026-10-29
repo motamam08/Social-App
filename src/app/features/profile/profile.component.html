@@ -8,7 +8,7 @@
                 <div aria-hidden="true"
                     class="pointer-events-none absolute inset-0  bg-[radial-gradient(circle_at_20%_30%,#fff8_0_7%,transparent_7.5%),radial-gradient(circle_at_75%_65%,#fff8_0_10%,transparent_10.5%)]">
                 </div>
-                <img class="absolute inset-0 z-10 h-full w-full object-cover object-center" [src]="responseData().cover"
+                <img class="absolute inset-0 z-10 h-full w-full object-cover object-center" [src]="loggedUser().cover"
                     alt="">
             </div>
         </div>
@@ -18,11 +18,11 @@
                 <div class="flex min-w-0 items-end gap-4 z-10">
                     <div aria-label="Profile photo placeholder"
                         class="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-full border-3 border-line bg-pop-yellow text-3xl font-extrabold shadow-brutal-md desk:size-28">
-                        <img class="h-full w-full object-cover object-center" [src]="responseData().photo" alt="">
+                        <img class="h-full w-full object-cover object-center" [src]="loggedUser().photo" alt="">
                     </div>
                     <div class="min-w-0 pb-1">
-                        <h1 id="profile-name" class="truncate text-headline font-extrabold">{{responseData().name}}</h1>
-                        <p class="truncate font-mono text-small font-bold text-ink/70">@{{responseData().username}}</p>
+                        <h1 id="profile-name" class="truncate text-headline font-extrabold">{{loggedUser().name}}</h1>
+                        <p class="truncate font-mono text-small font-bold text-ink/70">@{{loggedUser().username}}</p>
                     </div>
                 </div>
 

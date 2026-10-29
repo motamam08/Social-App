@@ -67,20 +67,17 @@
               @if (registerForm.get('name')?.invalid && registerForm.get('name')?.touched) {
               <p class="mt-1.5">
                 @if (registerForm.get('name')?.hasError('required')) {
-                <span
-                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                <span class="error-message">
                   Required
                 </span>
                 }
                 @if (registerForm.get('name')?.hasError('minlength')) {
-                <span
-                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                <span class="error-message">
                   Please enter at least 3 cahracters.
                 </span>
                 }
                 @if (registerForm.get('name')?.hasError('maxlength')) {
-                <span
-                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                <span class="error-message">
                   Please enter at most 20 cahracters.
                 </span>
                 }
@@ -114,14 +111,12 @@
               @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
               <p class="mt-1.5">
                 @if (registerForm.get('email')?.hasError('required')) {
-                <span
-                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                <span class="error-message">
                   Required
                 </span>
                 }
                 @if (registerForm.get('email')?.hasError('email')) {
-                <span
-                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                <span class="error-message">
                   Please Enter a Valide Email
                 </span>
                 }
@@ -147,8 +142,7 @@
               @if (registerForm.get('gender')?.invalid && registerForm.get('gender')?.touched) {
               <p class="mt-1.5">
                 @if (registerForm.get('gender')?.hasError('required')) {
-                <span
-                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                <span class="error-message">
                   Required
                 </span>
                 }
@@ -173,8 +167,7 @@
               ) {
               <p class="mt-1.5">
                 @if (registerForm.get('dateOfBirth')?.hasError('required')) {
-                <span
-                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                <span class="error-message">
                   Required
                 </span>
                 }
@@ -198,14 +191,12 @@
               @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
               <p class="mt-1.5">
                 @if (registerForm.get('password')?.hasError('required')) {
-                <span
-                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                <span class="error-message">
                   Required
                 </span>
                 }
                 @if (registerForm.get('password')?.hasError('pattern')) {
-                <span
-                  class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+                <span class="error-message">
                   at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, and 1
                   special character
                 </span>
@@ -232,14 +223,12 @@
             ) {
             <p class="mt-1.5">
               @if (registerForm.get('rePassword')?.hasError('required')) {
-              <span
-                class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+              <span class="error-message">
                 Required
               </span>
               }
               @if (registerForm.get('rePassword')?.hasError('mismatch')) {
-              <span
-                class="inline-block rounded-chip border-brutal-thin bg-accent px-1.5 font-mono text-caption font-bold">
+              <span class="error-message">
                 Password do not Match
               </span>
               }
@@ -267,8 +256,7 @@
 
           @if (registerErrorMessage()) {
           <p class="mt-2.5">
-            <span
-              class="inline-block rounded-chip border-brutal-thin bg-pop-yellow px-1.5 font-mono text-caption font-bold">
+            <span class="error-message">
               {{ registerErrorMessage() }}
             </span>
           </p>

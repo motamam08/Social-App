@@ -2,7 +2,7 @@
     <!-- ═══════════════════════ COMMENTS START ═══════════════════════ -->
     <section aria-labelledby="comments-title" class="flex flex-col gap-2.5">
         @if (commentsError()) {
-        <p role="alert" class="font-bold text-ink">{{ commentsError() }}</p>
+        <p role="alert" class="error-message">{{ commentsError() }}</p>
         }
         <h2 id="comments-title" class="flex items-center gap-3 text-subhead leading-tight font-extrabold">
             Comments
