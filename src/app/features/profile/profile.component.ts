@@ -15,6 +15,8 @@ export class ProfileComponent implements OnInit {
   loggedUser: WritableSignal<IUserData> = signal({} as IUserData);
   responseData: WritableSignal<IProfileUser> = signal({} as IProfileUser);
   loggedUserPosts: WritableSignal<IPosts[]> = signal([]);
+  readonly photoPreview = signal<string | null>(null);
+  readonly photoError = signal('');
 
 
 
@@ -60,5 +62,48 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  selectProfilePhoto(event: Event): void {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement) || !input.files?.length) {
+      return;
+    }
+
+    const file = input.files[0];
+    if (!file.type.startsWith('image/')) {
+      this.photoError.set('Please choose an image file.');
+      input.value = '';
+      return;
+    }
+
+    this.photoError.set('');
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        this.photoPreview.set(reader.result);
+      }
+    };
+    reader.onerror = () => {
+      console.error('Unable to preview profile photo:', reader.error);
+      this.photoError.set('Unable to preview this photo. Please choose another file.');
+      input.value = '';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  updateProfilePhoto(photoInput: HTMLInputElement): void {
+    const photo = this.photoPreview();
+    if (!photo) {
+      return;
+    }
+
+    this.loggedUser.update((user) => ({ ...user, photo }));
+    this.closePhotoPreview(photoInput);
+  }
+
+  closePhotoPreview(photoInput: HTMLInputElement): void {
+    this.photoPreview.set(null);
+    this.photoError.set('');
+    photoInput.value = '';
+  }
 
 }

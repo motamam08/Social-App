@@ -52,7 +52,7 @@
     <div class="w-full max-w-auth">
       <!-- Login Card -->
       <div class="auth-card rounded-card border-3 border-line bg-surface p-5 text-ink shadow-brutal-lg desk:p-8">
-        <form [formGroup]="loginForm" (submit)="login()">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
           <!-- Heading -->
           <header>
             <h2 class="text-heading leading-tight font-extrabold">Log in</h2>

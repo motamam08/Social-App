@@ -147,44 +147,53 @@
                         <p class="mb-2 font-extrabold text-ink">{{ user.name }}</p>
                         }
                         <label for="comment-body" class="sr-only">Add a comment</label>
-                        <textarea id="comment-body" name="body" rows="1" maxlength="500" required
-                            placeholder="Add a comment..."
-                            class=" w-full resize-none rounded-control border-3 border-line bg-surface px-3.5 py-3 font-sans text-base font-semibold text-ink placeholder:font-medium placeholder:text-ink/50 focus:shadow-brutal-focus focus:outline-none"></textarea>
+                        <div
+                            class="rounded-control border-2 border-line/60 bg-surface transition-[border-color,box-shadow] focus-within:border-line focus-within:shadow-brutal-sm motion-reduce:transition-none">
+                            <div class="relative">
+                                <textarea id="comment-body" name="body" rows="1" maxlength="500" required
+                                    placeholder="Add a comment..." (input)="resizeCommentTextarea($event)"
+                                    class="comment-textarea block w-full resize-none rounded-control border-0 bg-transparent px-3.5 py-3 pr-24 font-sans text-base font-semibold text-ink placeholder:font-medium placeholder:text-ink/50 focus:shadow-none focus:outline-none">
+                                </textarea>
+                                <div class="absolute right-2 bottom-1 flex items-end gap-1">
+                                    <label for="comment-image" aria-label="Add image" title="Add image"
+                                        class="inline-flex size-10 cursor-pointer items-center justify-center rounded-full text-ink/60 transition-colors hover:bg-ink/5 hover:text-ink has-focus-visible:outline-3 has-focus-visible:outline-offset-2 has-focus-visible:outline-ink motion-reduce:transition-none">
+                                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" aria-hidden="true">
+                                            <rect x="3" y="3" width="18" height="18" rx="3" />
+                                            <circle cx="8.5" cy="8.5" r="1.5" />
+                                            <path d="m21 15-5-5L5 21" />
+                                        </svg>
+                                        <input id="comment-image" name="image" type="file" accept="image/*"
+                                            class="sr-only" />
+                                    </label>
 
-                        <!-- Image preview: hidden until a file is picked (see the preview script at the bottom) -->
-                        <figure id="comment-image-preview" class="relative mt-3 hidden w-fit max-w-full">
-                            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                alt="Selected image preview"
-                                class="max-h-48 max-w-full rounded-control border-3 border-line object-cover" />
-                            <button id="comment-image-remove" type="button" aria-label="Remove image"
-                                class="absolute -top-3 -right-3 inline-flex size-8 cursor-pointer items-center justify-center rounded-full border-3 border-line bg-accent text-ink shadow-brutal-xs focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
-                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="3" aria-hidden="true">
-                                    <path d="M6 6l12 12M18 6L6 18" />
-                                </svg>
-                            </button>
-                        </figure>
+                                    <button type="submit" aria-label="Comment" title="Comment"
+                                        class="inline-flex size-10 cursor-pointer items-center justify-center rounded-full text-ink/60 transition-colors hover:bg-pop-yellow/50 hover:text-ink focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink motion-reduce:transition-none">
+                                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" aria-hidden="true">
+                                            <path d="m22 2-7 20-4-9-9-4Z" />
+                                            <path d="M22 2 11 13" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Image preview: hidden until a file is picked (see the preview script at the bottom) -->
+                            <figure id="comment-image-preview"
+                                class="relative mx-3.5 mb-3 hidden w-fit max-w-[calc(100%-1.75rem)]">
+                                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+                                    alt="Selected image preview"
+                                    class="max-h-48 max-w-full rounded-control border-3 border-line object-cover" />
+                                <button id="comment-image-remove" type="button" aria-label="Remove image"
+                                    class="absolute -top-3 -right-3 inline-flex size-8 cursor-pointer items-center justify-center rounded-full border-3 border-line bg-accent text-ink shadow-brutal-xs focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
+                                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="3" aria-hidden="true">
+                                        <path d="M6 6l12 12M18 6L6 18" />
+                                    </svg>
+                                </button>
+                            </figure>
+                        </div>
                     </div>
-                </div>
-
-                <div class="mt-3.5 flex items-center justify-between gap-3">
-                    <!-- Real file picker: the label is the button, the input stays keyboard-accessible -->
-                    <label for="comment-image"
-                        class="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none has-focus-visible:outline-3 has-focus-visible:outline-offset-3 has-focus-visible:outline-ink motion-reduce:transition-none">
-                        <svg class="size-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2.5" aria-hidden="true">
-                            <path d="M3 5h18v14H3z" />
-                            <circle cx="9" cy="10" r="2" />
-                            <path d="M3 17l6-5 4 3 3-2 5 4" />
-                        </svg>
-                        Add image
-                        <input id="comment-image" name="image" type="file" accept="image/*" class="sr-only" />
-                    </label>
-
-                    <button type="submit"
-                        class="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-accent px-5 py-3 font-sans text-button font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
-                        Comment
-                    </button>
                 </div>
             </form>
         </div>

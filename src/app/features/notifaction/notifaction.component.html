@@ -9,7 +9,7 @@
             </h1>
 
             <!-- A real form: posts to your endpoint (add `disabled` to the button when nothing is unread) -->
-            <button type="submit"
+            <button (click)="markAllAsRead()"
                 class="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-info px-5 py-3 font-sans text-button font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
                 Mark all read
             </button>
@@ -38,61 +38,34 @@
         -->
         <ul class="mt-6 flex list-none flex-col gap-4.5 p-0">
             <!-- 1 · like · unread -->
-            <li class="rounded-card border-3 border-line bg-unread p-4 text-ink shadow-brutal-md">
+            @for (notification of allNotificationsList(); track notification._id) {
+            <li class="rounded-card border-3 border-line p-4 text-ink shadow-brutal-md"
+                [class.bg-unread]="!notification.isRead" [class.bg-surface]="notification.isRead">
                 <div class="flex items-start gap-3">
                     <div aria-hidden="true"
-                        class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-pink font-extrabold text-ink">
-                        MP</div>
+                        class="flex size-11.5 overflow-hidden shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-pink font-extrabold text-ink">
+                        <img [src]="notification.actor.photo" alt="">
+                    </div>
                     <div class="min-w-0 flex-1">
                         <p class="leading-snug font-semibold">
-                            <span class="sr-only">Unread. </span><b>Mina Park</b> liked your post.
+                            <span class="sr-only">Unread. </span><b>{{notification.actor.name}}</b>
+                            {{notification.type |notificationMessage}}
                         </p>
-                        <time datetime="2026-10-19T09:58:00Z" class="mt-1.5 block font-mono text-label font-bold">2m
-                            ago</time>
+                        <time class="mt-1.5 block font-mono text-label font-bold">{{notification.createdAt
+                            |date:'mm:ss'}}</time>
                     </div>
-                    <span
-                        class="inline-block shrink-0 rounded-full border-2 border-line bg-pop-pink px-2.5 py-0.75 font-mono text-caption font-bold text-ink">LIKE</span>
+                    <button (click)="markAsRead(notification._id)"
+                        class="inline-block shrink-0 rounded-full border-2 border-line bg-pop-pink px-2.5 py-0.75 font-mono text-caption font-bold text-ink">Mark
+                        as read</button>
                 </div>
             </li>
+            }
 
             <!-- 2 · follow · unread -->
-            <li class="rounded-card border-3 border-line bg-unread p-4 text-ink shadow-brutal-md">
-                <div class="flex items-start gap-3">
-                    <div aria-hidden="true"
-                        class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-blue font-extrabold text-ink">
-                        KT</div>
-                    <div class="min-w-0 flex-1">
-                        <p class="leading-snug font-semibold">
-                            <span class="sr-only">Unread. </span><b>Kai Tanaka</b> started following you.
-                        </p>
-                        <time datetime="2026-10-19T09:40:00Z" class="mt-1.5 block font-mono text-label font-bold">20m
-                            ago</time>
-                    </div>
-                    <span
-                        class="inline-block shrink-0 rounded-full border-2 border-line bg-pop-blue px-2.5 py-0.75 font-mono text-caption font-bold text-ink">FOLLOW</span>
-                </div>
-            </li>
 
-            <!-- 3 · reply · unread -->
-            <li class="rounded-card border-3 border-line bg-unread p-4 text-ink shadow-brutal-md">
-                <div class="flex items-start gap-3">
-                    <div aria-hidden="true"
-                        class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-mint font-extrabold text-ink">
-                        JO</div>
-                    <div class="min-w-0 flex-1">
-                        <p class="leading-snug font-semibold">
-                            <span class="sr-only">Unread. </span><b>Jo Okafor</b> replied: Those borders are unreal.
-                        </p>
-                        <time datetime="2026-10-19T09:00:00Z" class="mt-1.5 block font-mono text-label font-bold">1h
-                            ago</time>
-                    </div>
-                    <span
-                        class="inline-block shrink-0 rounded-full border-2 border-line bg-pop-mint px-2.5 py-0.75 font-mono text-caption font-bold text-ink">REPLY</span>
-                </div>
-            </li>
 
             <!-- 4 · mention · read -->
-            <li class="rounded-card border-3 border-line bg-surface p-4 text-ink shadow-brutal-md">
+            <!-- <li class="rounded-card border-3 border-line bg-surface p-4 text-ink shadow-brutal-md">
                 <div class="flex items-start gap-3">
                     <div aria-hidden="true"
                         class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-yellow font-extrabold text-ink">
@@ -105,48 +78,21 @@
                     <span
                         class="inline-block shrink-0 rounded-full border-2 border-line bg-pop-yellow px-2.5 py-0.75 font-mono text-caption font-bold text-ink">MENTION</span>
                 </div>
-            </li>
+            </li> -->
 
             <!-- 5 · like · read -->
-            <li class="rounded-card border-3 border-line bg-surface p-4 text-ink shadow-brutal-md">
-                <div class="flex items-start gap-3">
-                    <div aria-hidden="true"
-                        class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-pink font-extrabold text-ink">
-                        MP</div>
-                    <div class="min-w-0 flex-1">
-                        <p class="leading-snug font-semibold"><b>Mina Park</b> and 12 others liked your photo.</p>
-                        <time datetime="2026-10-18T10:00:00Z" class="mt-1.5 block font-mono text-label font-bold">1d
-                            ago</time>
-                    </div>
-                    <span
-                        class="inline-block shrink-0 rounded-full border-2 border-line bg-pop-pink px-2.5 py-0.75 font-mono text-caption font-bold text-ink">LIKE</span>
-                </div>
-            </li>
 
-            <!-- 6 · follow · read -->
-            <li class="rounded-card border-3 border-line bg-surface p-4 text-ink shadow-brutal-md">
-                <div class="flex items-start gap-3">
-                    <div aria-hidden="true"
-                        class="flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-blue font-extrabold text-ink">
-                        SR</div>
-                    <div class="min-w-0 flex-1">
-                        <p class="leading-snug font-semibold"><b>Sam Reyes</b> started following you.</p>
-                        <time datetime="2026-10-18T08:00:00Z" class="mt-1.5 block font-mono text-label font-bold">1d
-                            ago</time>
-                    </div>
-                    <span
-                        class="inline-block shrink-0 rounded-full border-2 border-line bg-pop-blue px-2.5 py-0.75 font-mono text-caption font-bold text-ink">FOLLOW</span>
-                </div>
-            </li>
         </ul>
 
-        <!--
-          Empty state: show this instead of the <ul> when there is nothing to list.
- 
-          <p class="mt-6 rounded-card border-3 border-line bg-surface p-4 font-semibold text-ink shadow-brutal-md">
+
+        <!-- Empty state: show this instead of the <ul> when there is nothing to list. -->
+
+        @if(allNotificationsList().length <= 0){ <p
+            class="mt-6 rounded-card border-3 border-line bg-surface p-4 font-semibold text-ink shadow-brutal-md">
             Nothing here yet.
-          </p>
-        -->
+            </p>
+            }
+
     </section>
     <!-- ════════════════════════ NOTIFICATIONS END ════════════════════════ -->
 </main>

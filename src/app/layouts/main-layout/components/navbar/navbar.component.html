@@ -72,29 +72,6 @@
       </summary>
 
       <div class="mobile-nav-content">
-        <nav aria-label="Primary navigation" class="flex w-full flex-col items-stretch gap-2">
-          <a routerLink="/feed" routerLinkActive=" bg-primary hover:bg-primary shadow-brutal-sm border-brutal"
-            (click)="navigationMenu.open = false"
-            class="inline-flex min-h-11 w-full items-center whitespace-nowrap rounded-control border-transparent px-3 py-2 text-small font-extrabold text-ink no-underline hover:bg-canvas focus-visible:outline-offset-3 focus-visible:outline-ink desk:w-auto desk:px-4 desk:py-2.5 desk:text-base">
-            Feed
-          </a>
-
-          <a routerLink="/profile" routerLinkActive=" bg-primary hover:bg-primary shadow-brutal-sm border-brutal"
-            (click)="navigationMenu.open = false"
-            class="inline-flex min-h-11 w-full items-center whitespace-nowrap rounded-control border-transparent px-3 py-2 text-small font-extrabold text-ink no-underline hover:bg-canvas focus-visible:outline-offset-3 focus-visible:outline-ink desk:w-auto desk:px-4 desk:py-2.5 desk:text-base">
-            Profile
-          </a>
-
-          <a routerLink="/notifaction" routerLinkActive=" bg-primary hover:bg-primary shadow-brutal-sm border-brutal"
-            (click)="navigationMenu.open = false"
-            class="inline-flex min-h-11 w-full items-center whitespace-nowrap rounded-control border-transparent px-3 py-2 text-small font-extrabold text-ink no-underline hover:bg-canvas focus-visible:outline-offset-3 focus-visible:outline-ink desk:w-auto desk:px-4 desk:py-2.5 desk:text-base">
-            Notifications
-            <span
-              class="ml-1.5 inline-block rounded-full border-2 border-line bg-accent px-1.75 text-caption font-bold text-ink">3<span
-                class="sr-only"> unread</span></span>
-          </a>
-        </nav>
-
         <details id="mobile-account-menu" class="mobile-account-menu group relative w-full">
           <summary
             class="flex min-h-11 w-full cursor-pointer list-none items-center justify-between gap-2.5 rounded-control border-3 border-line bg-surface py-1.5 pr-3 pl-1.5 shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop select-none hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs group-open:translate-x-0.5 group-open:translate-y-0.5 group-open:shadow-brutal-xs focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none desk:w-auto [&::-webkit-details-marker]:hidden">
@@ -134,6 +111,30 @@
             </ul>
           </div>
         </details>
+        <nav aria-label="Primary navigation" class="flex w-full flex-col items-stretch gap-2">
+          <a routerLink="/feed" routerLinkActive=" bg-primary hover:bg-primary shadow-brutal-sm border-brutal"
+            (click)="navigationMenu.open = false"
+            class="inline-flex min-h-11 w-full items-center whitespace-nowrap rounded-control border-transparent px-3 py-2 text-small font-extrabold text-ink no-underline hover:bg-canvas focus-visible:outline-offset-3 focus-visible:outline-ink desk:w-auto desk:px-4 desk:py-2.5 desk:text-base">
+            Feed
+          </a>
+
+          <a routerLink="/profile" routerLinkActive=" bg-primary hover:bg-primary shadow-brutal-sm border-brutal"
+            (click)="navigationMenu.open = false"
+            class="inline-flex min-h-11 w-full items-center whitespace-nowrap rounded-control border-transparent px-3 py-2 text-small font-extrabold text-ink no-underline hover:bg-canvas focus-visible:outline-offset-3 focus-visible:outline-ink desk:w-auto desk:px-4 desk:py-2.5 desk:text-base">
+            Profile
+          </a>
+
+          <a routerLink="/notifaction" routerLinkActive=" bg-primary hover:bg-primary shadow-brutal-sm border-brutal"
+            (click)="navigationMenu.open = false"
+            class="inline-flex min-h-11 w-full items-center whitespace-nowrap rounded-control border-transparent px-3 py-2 text-small font-extrabold text-ink no-underline hover:bg-canvas focus-visible:outline-offset-3 focus-visible:outline-ink desk:w-auto desk:px-4 desk:py-2.5 desk:text-base">
+            Notifications
+            <span
+              class="ml-1.5 inline-block rounded-full border-2 border-line bg-accent px-1.75 text-caption font-bold text-ink">3<span
+                class="sr-only"> unread</span></span>
+          </a>
+        </nav>
+
+
       </div>
     </details>
   </div>

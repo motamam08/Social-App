@@ -17,6 +17,14 @@ export class CommentsComponent implements OnInit {
   readonly commentsError = signal('');
   readonly currentUser = signal<IUserData | null>(null);
 
+  resizeCommentTextarea(event: Event): void {
+    if (event.currentTarget instanceof HTMLTextAreaElement) {
+      const textarea = event.currentTarget;
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  }
+
   ngOnInit(): void {
     this.loadCurrentUser();
     this.getPostComments();
@@ -44,6 +52,17 @@ export class CommentsComponent implements OnInit {
       error: (error) => {
         console.error(error);
         this.commentsError.set('Unable to load comments. Please try again later.');
+      }
+    })
+  }
+
+  creatComment(postID: string) {
+    this.commentsService.getPostComments(postID).subscribe({
+      next: (res) => {
+
+      },
+      error: (err) => {
+
       }
     })
   }

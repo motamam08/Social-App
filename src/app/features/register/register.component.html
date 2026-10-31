@@ -44,7 +44,7 @@
     <div class="w-full max-w-auth">
       <!-- Form Card -->
       <div class="auth-card rounded-card border-3 border-line bg-surface p-4 text-ink shadow-brutal-lg desk:p-5">
-        <form [formGroup]="registerForm" (submit)="register()">
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
           <!-- Form Heading -->
           <header class="auth-header">
             <h2 class="auth-heading text-3xl leading-tight font-extrabold">Create account</h2>

@@ -35,6 +35,10 @@ export class AuthService {
     );
   }
 
+  changeProfilePhoto(): Observable<any> {
+    return this.httpClient.put(`${environment.baseUrl}users/upload-photo`, {})
+  }
+
   userProfile(userId: string): Observable<any> {
     return this.httpClient.get(`${environment.baseUrl}users/${userId}/profile`)
   }

@@ -134,8 +134,8 @@
                 <div
                     class="flex flex-wrap items-center gap-x-4 gap-y-2 border-b-2 border-line/20 pb-3 text-small font-semibold text-ink/75">
                     <span>{{ post.likesCount }} likes</span>
-                    <a [href]="'/post/' + post._id + '#comments'"
-                        class="text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
+                    <a #commentsButton
+                        class="text-ink no-underline cursor-pointer hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
                         {{ post.commentsCount }} comments
                     </a>
                     <span>{{ post.sharesCount }} shares</span>
@@ -154,7 +154,7 @@
                         </svg>
                         Like
                     </button>
-                    <button #commentsButton
+                    <button
                         class="inline-flex cursor-pointer min-h-11 items-center justify-center gap-2 rounded-control border-3 border-line bg-surface px-3 py-2 text-small font-extrabold text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none hover:bg-pop-blue/30">
                         <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                             aria-hidden="true">
