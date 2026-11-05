@@ -145,8 +145,12 @@
                         @if (openLikersPostId() === post._id) {
                         <div [id]="'post-likers-' + post._id" role="dialog" aria-label="People who liked this post"
                             class="absolute left-0 top-full z-20 mt-2 max-h-56 w-56 overflow-y-auto rounded-control border-2 border-line bg-surface p-2 text-ink shadow-brutal-md">
-                            @if (getPostLikers(post).length) {
-                            @for (liker of getPostLikers(post); track liker.id) {
+                            @if (loadingLikersPostId() === post._id) {
+                            <p role="status" class="p-2 text-small font-semibold text-ink/70">Loading likes…</p>
+                            } @else if (likersError() && openLikersPostId() === post._id) {
+                            <p role="alert" class="p-2 text-small font-semibold text-ink/70">{{ likersError() }}</p>
+                            } @else if (getPostLikers(post._id).length) {
+                            @for (liker of getPostLikers(post._id); track liker.id) {
                             <div class="flex items-center gap-2 rounded-control p-1.5">
                                 <img [src]="liker.photo" [alt]="liker.name"
                                     class="size-8 shrink-0 rounded-full border border-line object-cover">
@@ -154,7 +158,7 @@
                             </div>
                             }
                             } @else {
-                            <p class="p-2 text-small font-semibold text-ink/70">Liker details are unavailable.</p>
+                            <p class="p-2 text-small font-semibold text-ink/70">No likes yet.</p>
                             }
                         </div>
                         }

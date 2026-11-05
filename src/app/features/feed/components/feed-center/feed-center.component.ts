@@ -10,18 +10,20 @@ import { RelativeTimePipe } from '../../../../shared/pipes/relative-time.pipe';
 @Component({
   selector: 'app-feed-center',
   imports: [CommentsComponent, ReactiveFormsModule, RouterLink, RelativeTimePipe],
-  templateUrl: './feed-center.component.html',
-  styleUrl: './feed-center.component.css',
+    templateUrl: './feed-center.component.html',
+      styleUrl: './feed-center.component.css',
 })
 export class FeedCenterComponent implements OnInit {
   private readonly postsService = inject(PostsService);
 
+  private readonly postLikers = signal<Record<string, { id: string; name: string; photo: string }[]>>({});
+
   user!: IUserData;
-
-
 
   readonly openPostMenu = signal<string | null>(null);
   readonly openLikersPostId = signal<string | null>(null);
+  readonly loadingLikersPostId = signal<string | null>(null);
+  readonly likersError = signal('');
   readonly openCommentComposerPostId = signal<string | null>(null);
   readonly postsError = signal('');
   readonly postSubmissionError = signal('');
@@ -67,11 +69,40 @@ export class FeedCenterComponent implements OnInit {
   }
 
   togglePostLikers(postId: string): void {
-    this.openLikersPostId.update((openPostId) => (openPostId === postId ? null : postId));
+    if (this.openLikersPostId() === postId) {
+      this.openLikersPostId.set(null);
+      return;
+    }
+
+    this.openLikersPostId.set(postId);
+    this.likersError.set('');
+    this.loadingLikersPostId.set(postId);
+    this.postsService.getPostLikes(postId).subscribe({
+      next: (res) => {
+        this.postLikers.update((likersByPost) => ({
+          ...likersByPost,
+          [postId]: this.toPostLikers(res.data.likes),
+        }));
+        if (this.loadingLikersPostId() === postId) {
+          this.loadingLikersPostId.set(null);
+        }
+      },
+      error: (error) => {
+        console.error('Unable to load post likes:', error);
+        if (this.loadingLikersPostId() === postId) {
+          this.loadingLikersPostId.set(null);
+          this.likersError.set('Unable to load people who liked this post.');
+        }
+      },
+    });
   }
 
-  getPostLikers(post: IPosts): { id: string; name: string; photo: string }[] {
-    return (post.likes ?? []).flatMap((like: unknown, index: number) => {
+  getPostLikers(postId: string): { id: string; name: string; photo: string }[] {
+    return this.postLikers()[postId] ?? [];
+  }
+
+  private toPostLikers(likes: unknown[]): { id: string; name: string; photo: string }[] {
+    return likes.flatMap((like, index) => {
       if (typeof like !== 'object' || like === null) {
         return [];
       }
@@ -90,7 +121,7 @@ export class FeedCenterComponent implements OnInit {
         ? user['_id']
         : typeof user['id'] === 'string'
           ? user['id']
-          : `${post._id}-liker-${index}`;
+          : `liker-${index}`;
 
       return [{ id, name: user['name'], photo: user['photo'] }];
     });

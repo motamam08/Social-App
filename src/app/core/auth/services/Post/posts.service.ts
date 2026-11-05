@@ -26,6 +26,12 @@ export class PostsService {
     return this.httpClient.get(`${environment.baseUrl}posts/${postId}`);
   }
 
+  getPostLikes(postId: string): Observable<{ data: { likes: unknown[] } }> {
+    return this.httpClient.get<{ data: { likes: unknown[] } }>(
+      `${environment.baseUrl}posts/${postId}/likes`
+    );
+  }
+
   deletePost(postId: string): Observable<any> {
     return this.httpClient.delete(`${environment.baseUrl}posts/${postId}`);
   }
