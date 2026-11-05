@@ -82,7 +82,7 @@
                     <img [src]="post.user.photo" alt="" class="w-full">
                 </div>
                 <div class="min-w-0 flex-1">
-                    <a [href]="'/u/' + post.user.username"
+                    <a [routerLink]="['/user-details', post.user._id]"
                         class="wrap-break-word font-bold text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">{{post.user.name}}</a>
                     <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                         <span class="break-all text-label font-semibold">@{{post.user.username}}-</span>

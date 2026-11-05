@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
+import { IProfileUser } from '../../models/iprofile-user.interface';
+import { IPosts } from '../../models/iposts.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -39,12 +41,16 @@ export class AuthService {
     return this.httpClient.put(`${environment.baseUrl}users/upload-photo`, {})
   }
 
-  userProfile(userId: string): Observable<any> {
-    return this.httpClient.get(`${environment.baseUrl}users/${userId}/profile`)
+  userProfile(userId: string): Observable<{ data: { user: IProfileUser } }> {
+    return this.httpClient.get<{ data: { user: IProfileUser } }>(
+      `${environment.baseUrl}users/${userId}/profile`
+    );
   }
 
-  getUserPosts(userId: string): Observable<any> {
-    return this.httpClient.get(`${environment.baseUrl}users/${userId}/posts`)
+  getUserPosts(userId: string): Observable<{ data: { posts: IPosts[] } }> {
+    return this.httpClient.get<{ data: { posts: IPosts[] } }>(
+      `${environment.baseUrl}users/${userId}/posts`
+    );
   }
 
   getFollowSuggestions(): Observable<any> {

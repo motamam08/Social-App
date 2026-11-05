@@ -12,6 +12,7 @@ import { ForgetPasswordComponent } from './features/forget-password/forget-passw
 import { isLoggedGuard } from './core/auth/guards/is-logged-guard';
 import { ChangePasswordComponent } from './features/change-password/change-password.component';
 import { PostDetailsComponent } from './features/post-details/post-details.component';
+import { UserDetailsComponent } from './features/user-details/user-details.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -32,6 +33,7 @@ export const routes: Routes = [
     children: [
       { path: 'feed', component: FeedComponent },
       { path: 'post-details/:id', component: PostDetailsComponent },
+      { path: 'user-details/:userId', component: UserDetailsComponent },
       { path: 'change-password', component: ChangePasswordComponent },
       { path: 'profile', component: ProfileComponent },
       { path: 'notifaction', component: NotifactionComponent },

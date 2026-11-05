@@ -20,7 +20,7 @@
                 <img [src]="post.user.photo" [alt]="post.user.name" class="w-full object-cover">
             </div>
             <div class="min-w-0">
-                <a [href]="'/u/' + post.user.username"
+                <a [routerLink]="['/user-details', post.user._id]"
                     class="font-bold text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
                     {{ post.user.name }}
                 </a>
