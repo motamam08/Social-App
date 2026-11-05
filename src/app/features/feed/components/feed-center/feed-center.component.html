@@ -135,7 +135,30 @@
             <footer class="flex min-w-0 flex-col gap-3 border-t-2 border-line/20 p-4">
                 <div
                     class="flex flex-wrap items-center gap-x-4 gap-y-2 border-b-2 border-line/20 pb-3 text-small font-semibold text-ink/75">
-                    <span>{{ post.likesCount }} likes</span>
+                    <div class="relative">
+                        <button type="button" (click)="togglePostLikers(post._id)"
+                            [attr.aria-expanded]="openLikersPostId() === post._id"
+                            [attr.aria-controls]="'post-likers-' + post._id"
+                            class="cursor-pointer text-ink hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
+                            {{ post.likesCount }} likes
+                        </button>
+                        @if (openLikersPostId() === post._id) {
+                        <div [id]="'post-likers-' + post._id" role="dialog" aria-label="People who liked this post"
+                            class="absolute left-0 top-full z-20 mt-2 max-h-56 w-56 overflow-y-auto rounded-control border-2 border-line bg-surface p-2 text-ink shadow-brutal-md">
+                            @if (getPostLikers(post).length) {
+                            @for (liker of getPostLikers(post); track liker.id) {
+                            <div class="flex items-center gap-2 rounded-control p-1.5">
+                                <img [src]="liker.photo" [alt]="liker.name"
+                                    class="size-8 shrink-0 rounded-full border border-line object-cover">
+                                <span class="truncate text-small font-bold">{{ liker.name }}</span>
+                            </div>
+                            }
+                            } @else {
+                            <p class="p-2 text-small font-semibold text-ink/70">Liker details are unavailable.</p>
+                            }
+                        </div>
+                        }
+                    </div>
                     <button type="button" (click)="toggleCommentComposer(post._id)"
                         [attr.aria-expanded]="openCommentComposerPostId() === post._id"
                         [attr.aria-controls]="'comment-composer-' + post._id"

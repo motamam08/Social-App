@@ -21,6 +21,7 @@ export class FeedCenterComponent implements OnInit {
 
 
   readonly openPostMenu = signal<string | null>(null);
+  readonly openLikersPostId = signal<string | null>(null);
   readonly openCommentComposerPostId = signal<string | null>(null);
   readonly postsError = signal('');
   readonly postSubmissionError = signal('');
@@ -63,6 +64,36 @@ export class FeedCenterComponent implements OnInit {
 
   togglePostMenu(postId: string): void {
     this.openPostMenu.update((openPostId) => (openPostId === postId ? null : postId));
+  }
+
+  togglePostLikers(postId: string): void {
+    this.openLikersPostId.update((openPostId) => (openPostId === postId ? null : postId));
+  }
+
+  getPostLikers(post: IPosts): { id: string; name: string; photo: string }[] {
+    return (post.likes ?? []).flatMap((like: unknown, index: number) => {
+      if (typeof like !== 'object' || like === null) {
+        return [];
+      }
+
+      const likeData = like as Record<string, unknown>;
+      const nestedUser = likeData['user'] ?? likeData['likeCreator'] ?? likeData['likedBy'];
+      const user = typeof nestedUser === 'object' && nestedUser !== null
+        ? nestedUser as Record<string, unknown>
+        : likeData;
+
+      if (typeof user['name'] !== 'string' || typeof user['photo'] !== 'string') {
+        return [];
+      }
+
+      const id = typeof user['_id'] === 'string'
+        ? user['_id']
+        : typeof user['id'] === 'string'
+          ? user['id']
+          : `${post._id}-liker-${index}`;
+
+      return [{ id, name: user['name'], photo: user['photo'] }];
+    });
   }
 
   toggleCommentComposer(postId: string): void {

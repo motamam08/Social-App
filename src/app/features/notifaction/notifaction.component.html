@@ -8,25 +8,21 @@
                 Notifications
             </h1>
 
-            <!-- A real form: posts to your endpoint (add `disabled` to the button when nothing is unread) -->
-            <button (click)="markAllAsRead()"
+            <button type="button" (click)="markAllAsRead()" [disabled]="unreadNotificationCount() === 0"
                 class="inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-info px-5 py-3 font-sans text-button font-extrabold text-ink shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
                 Mark all read
             </button>
         </div>
 
-        <!--
-          Filters. Plain links, so they work without JavaScript.
-            active   → min-h-12 bg-primary px-5 py-3 text-button shadow-brutal-md   + aria-current="page"
-            inactive → min-h-11 bg-surface px-3.5 py-2 text-small shadow-brutal-sm
-        -->
         <nav aria-label="Filter notifications" class="mt-5 flex flex-wrap items-center gap-3">
-            <button
-                class="inline-flex min-h-12 items-center gap-2 rounded-control border-3 border-line bg-primary px-5 py-3 text-button font-extrabold text-ink no-underline shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+            <button type="button" (click)="setUnreadOnly(false)" [attr.aria-pressed]="!unreadOnly()"
+                [class.bg-primary]="!unreadOnly()" [class.bg-surface]="unreadOnly()"
+                class="inline-flex min-h-12 items-center gap-2 rounded-control border-3 border-line px-5 py-3 text-button font-extrabold text-ink no-underline shadow-brutal-md transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
                 All
             </button>
-            <button
-                class="inline-flex min-h-11 items-center gap-2 rounded-control border-3 border-line bg-surface px-3.5 py-2 text-small font-extrabold text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
+            <button type="button" (click)="setUnreadOnly(true)" [attr.aria-pressed]="unreadOnly()"
+                [class.bg-primary]="unreadOnly()" [class.bg-surface]="!unreadOnly()"
+                class="inline-flex min-h-11 items-center gap-2 rounded-control border-3 border-line px-3.5 py-2 text-small font-extrabold text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none">
                 Unread
             </button>
 
@@ -36,9 +32,15 @@
           List. Unread card → bg-unread (+ the sr-only "Unread." text). Read card → bg-surface.
           Tag colors:  LIKE bg-pop-pink · FOLLOW bg-pop-blue · REPLY bg-pop-mint · MENTION bg-pop-yellow
         -->
+        @if (notificationError()) {
+        <p role="alert" class="error-message mt-6">{{ notificationError() }}</p>
+        }
+        @if (notificationsLoading() && allNotificationsList().length === 0) {
+        <p role="status" class="mt-6 font-semibold text-ink/70">Loading notifications…</p>
+        }
         <ul class="mt-6 flex list-none flex-col gap-4.5 p-0">
             <!-- 1 · like · unread -->
-            @for (notification of allNotificationsList(); track notification._id) {
+            @for (notification of visibleNotifications(); track notification._id) {
             <li class="rounded-card border-3 border-line p-4 text-ink shadow-brutal-md"
                 [class.bg-unread]="!notification.isRead" [class.bg-surface]="notification.isRead">
                 <div class="flex items-start gap-3">
@@ -48,15 +50,20 @@
                     </div>
                     <div class="min-w-0 flex-1">
                         <p class="leading-snug font-semibold">
-                            <span class="sr-only">Unread. </span><b>{{notification.actor.name}}</b>
+                            @if (!notification.isRead) {
+                            <span class="sr-only">Unread. </span>
+                            }
+                            <b>{{notification.actor.name}}</b>
                             {{notification.type |notificationMessage}}
                         </p>
                         <time [attr.datetime]="notification.createdAt"
                             class="mt-1.5 block font-mono text-label font-bold">{{notification.createdAt | relativeTime}}</time>
                     </div>
-                    <button (click)="markAsRead(notification._id)"
+                    @if (!notification.isRead) {
+                    <button type="button" (click)="markAsRead(notification._id)"
                         class="inline-block shrink-0 rounded-full border-2 border-line bg-pop-pink px-2.5 py-0.75 font-mono text-caption font-bold text-ink">Mark
                         as read</button>
+                    }
                 </div>
             </li>
             }
@@ -87,9 +94,9 @@
 
         <!-- Empty state: show this instead of the <ul> when there is nothing to list. -->
 
-        @if(allNotificationsList().length <= 0){ <p
+        @if(visibleNotifications().length === 0){ <p
             class="mt-6 rounded-card border-3 border-line bg-surface p-4 font-semibold text-ink shadow-brutal-md">
-            Nothing here yet.
+            {{ unreadOnly() ? 'No unread notifications.' : 'Nothing here yet.' }}
             </p>
             }
 
