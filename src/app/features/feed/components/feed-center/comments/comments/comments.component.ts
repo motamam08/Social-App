@@ -3,10 +3,11 @@ import { CommentsService } from '../../../../../../core/auth/services/comments/c
 import { IComments } from '../../../../../../core/models/icomments.interface';
 import { IUserData } from '../../../../../../core/models/iuser-data.interface';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { RelativeTimePipe } from '../../../../../../shared/pipes/relative-time.pipe';
 
 @Component({
   selector: 'app-comments',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RelativeTimePipe],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css',
 })

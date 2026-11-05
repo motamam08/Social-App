@@ -27,7 +27,7 @@
                 <div class="flex flex-wrap items-center gap-x-2 text-label font-semibold">
                     <span>&#64;{{ post.user.username }}</span>
                     <span aria-hidden="true">·</span>
-                    <time [attr.datetime]="post.createdAt">{{ post.createdAt }}</time>
+                    <time [attr.datetime]="post.createdAt">{{ post.createdAt | relativeTime }}</time>
                     <span aria-hidden="true">·</span>
                     <span>{{ post.privacy }}</span>
                 </div>

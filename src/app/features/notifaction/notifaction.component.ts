@@ -2,11 +2,11 @@ import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core
 import { NotificationsService } from '../../core/auth/services/notifications/notifications.service';
 import { INotification } from '../../core/models/inotification.interface';
 import { NotificationMessagePipe } from '../../shared/pipes/notification-message-pipe';
-import { DatePipe } from '@angular/common';
+import { RelativeTimePipe } from '../../shared/pipes/relative-time.pipe';
 
 @Component({
   selector: 'app-notifaction',
-  imports: [NotificationMessagePipe, DatePipe],
+  imports: [NotificationMessagePipe, RelativeTimePipe],
   templateUrl: './notifaction.component.html',
   styleUrl: './notifaction.component.css',
 })

@@ -32,6 +32,8 @@
                                 class="block truncate font-bold text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">{{comment.commentCreator.name}}</a>
                             <p class="font-mono text-label font-bold">
                                 @{{comment.commentCreator.username}}
+                                <span aria-hidden="true">·</span>
+                                <time [attr.datetime]="comment.createdAt">{{ comment.createdAt | relativeTime }}</time>
                             </p>
                         </div>
                     </header>

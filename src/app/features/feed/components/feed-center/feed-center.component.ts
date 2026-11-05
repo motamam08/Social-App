@@ -5,10 +5,11 @@ import { CommentsComponent } from './comments/comments/comments.component';
 import { IUserData } from '../../../../core/models/iuser-data.interface';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { RelativeTimePipe } from '../../../../shared/pipes/relative-time.pipe';
 
 @Component({
   selector: 'app-feed-center',
-  imports: [CommentsComponent, ReactiveFormsModule, RouterLink],
+  imports: [CommentsComponent, ReactiveFormsModule, RouterLink, RelativeTimePipe],
   templateUrl: './feed-center.component.html',
   styleUrl: './feed-center.component.css',
 })
@@ -61,6 +62,33 @@ export class FeedCenterComponent implements OnInit {
 
   togglePostMenu(postId: string): void {
     this.openPostMenu.update((openPostId) => (openPostId === postId ? null : postId));
+  }
+
+  isPostLiked(post: IPosts): boolean {
+    const userId = this.user?._id;
+    if (!userId) {
+      return false;
+    }
+
+    return post.likes?.some((like: unknown) => {
+      if (typeof like === 'string') {
+        return like === userId;
+      }
+      if (typeof like !== 'object' || like === null) {
+        return false;
+      }
+
+      const likeData = like as Record<string, unknown>;
+      if (likeData['_id'] === userId) {
+        return true;
+      }
+
+      const likeUser = likeData['user'];
+      return typeof likeUser === 'object'
+        && likeUser !== null
+        && '_id' in likeUser
+        && likeUser['_id'] === userId;
+    }) ?? false;
   }
 
   createPost(e: SubmitEvent, form: HTMLFormElement, photoInput: HTMLInputElement): void {

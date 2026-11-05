@@ -4,10 +4,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommentsComponent } from '../feed/components/feed-center/comments/comments/comments.component';
 import { PostsService } from '../../core/auth/services/Post/posts.service';
 import { IPosts } from '../../core/models/iposts.interface';
+import { RelativeTimePipe } from '../../shared/pipes/relative-time.pipe';
 
 @Component({
   selector: 'app-post-details',
-  imports: [CommentsComponent, RouterLink],
+  imports: [CommentsComponent, RouterLink, RelativeTimePipe],
   templateUrl: './post-details.component.html',
   styleUrl: './post-details.component.css',
 })

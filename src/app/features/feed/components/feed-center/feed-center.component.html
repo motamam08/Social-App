@@ -86,7 +86,8 @@
                         class="wrap-break-word font-bold text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">{{post.user.name}}</a>
                     <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                         <span class="break-all text-label font-semibold">@{{post.user.username}}-</span>
-                        <time class="wrap-break-word font-bold text-label text-gray-400">{{post.createdAt}}</time>
+                        <time [attr.datetime]="post.createdAt"
+                            class="wrap-break-word font-bold text-label text-gray-400">{{post.createdAt | relativeTime}}</time>
                         <p class="text-label font-semibold font-mono ">{{post.privacy}}</p>
                     </div>
                 </div>
@@ -144,27 +145,36 @@
                         Post details
                     </a>
                 </div>
-                <div class="grid grid-cols-3 gap-2">
+                <div class="grid grid-cols-3 gap-1.5">
                     <button (click)="likePost(post._id)" type="button"
-                        [attr.aria-label]="'Like post, ' + post.likesCount + ' likes'"
-                        class="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-surface px-3 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none hover:bg-pop-pink/30">
-                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        [attr.aria-label]="(isPostLiked(post) ? 'Unlike post, ' : 'Like post, ') + post.likesCount + ' likes'"
+                        [attr.aria-pressed]="isPostLiked(post)"
+                        [class.bg-pop-pink]="isPostLiked(post)"
+                        [class.bg-surface]="!isPostLiked(post)"
+                        class="inline-flex size-9 cursor-pointer items-center justify-center rounded-control border-2 border-line text-ink shadow-brutal-sm transition-[translate,box-shadow,background-color] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none hover:bg-pop-pink/50"
+                        [title]="isPostLiked(post) ? 'Unlike post' : 'Like post'">
+                        <svg class="size-4.5" viewBox="0 0 24 24" [attr.fill]="isPostLiked(post) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2.5"
                             aria-hidden="true">
                             <path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z" />
                         </svg>
-                        Like
                     </button>
-                    <button
-                        class="inline-flex cursor-pointer min-h-11 items-center justify-center gap-2 rounded-control border-3 border-line bg-surface px-3 py-2 text-small font-extrabold text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none hover:bg-pop-blue/30">
-                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    <button type="button" aria-label="View comments" title="View comments"
+                        (click)="commentsButton.click()"
+                        class="inline-flex size-9 cursor-pointer items-center justify-center rounded-control border-2 border-line bg-surface text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none hover:bg-pop-blue/30">
+                        <svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                             aria-hidden="true">
                             <path d="M4 5h16v11H9l-5 4z" />
                         </svg>
-                        Comment
                     </button>
-                    <button type="button"
-                        class="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-control border-3 border-line bg-surface px-3 py-2 text-small font-extrabold text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none hover:bg-pop-mint/40">
-                        Share
+                    <button type="button" aria-label="Share post" title="Share post"
+                        class="inline-flex size-9 cursor-pointer items-center justify-center rounded-control border-2 border-line bg-surface text-ink shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none hover:bg-pop-mint/40">
+                        <svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                            aria-hidden="true">
+                            <circle cx="18" cy="5" r="3" />
+                            <circle cx="6" cy="12" r="3" />
+                            <circle cx="18" cy="19" r="3" />
+                            <path d="m8.7 10.7 6.6-4.4m-6.6 7 6.6 4.4" />
+                        </svg>
                     </button>
                 </div>
             </footer>

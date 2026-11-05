@@ -51,8 +51,8 @@
                             <span class="sr-only">Unread. </span><b>{{notification.actor.name}}</b>
                             {{notification.type |notificationMessage}}
                         </p>
-                        <time class="mt-1.5 block font-mono text-label font-bold">{{notification.createdAt
-                            |date:'mm:ss'}}</time>
+                        <time [attr.datetime]="notification.createdAt"
+                            class="mt-1.5 block font-mono text-label font-bold">{{notification.createdAt | relativeTime}}</time>
                     </div>
                     <button (click)="markAsRead(notification._id)"
                         class="inline-block shrink-0 rounded-full border-2 border-line bg-pop-pink px-2.5 py-0.75 font-mono text-caption font-bold text-ink">Mark
