@@ -15,7 +15,12 @@ export class CommentsComponent implements OnInit {
   private readonly commentsService = inject(CommentsService);
 
   postId: InputSignal<string> = input.required();
+  composerOnly = input(false);
+  topComment = input<IComments | null>(null);
+  commentCount = input(0);
   commentsData: WritableSignal<IComments[]> = signal([])
+  readonly allCommentsVisible = signal(false);
+  readonly commentsLoaded = signal(false);
   readonly commentsError = signal('');
   readonly commentSubmissionError = signal('');
   readonly currentUser = signal<IUserData | null>(null);
@@ -35,7 +40,9 @@ export class CommentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCurrentUser();
-    this.getPostComments();
+    if (!this.composerOnly() || this.allCommentsVisible()) {
+      this.getPostComments();
+    }
   }
 
   private loadCurrentUser(): void {
@@ -55,13 +62,39 @@ export class CommentsComponent implements OnInit {
     this.commentsService.getPostComments(this.postId()).subscribe({
       next: (res) => {
         this.commentsError.set('');
-        this.commentsData.set(res.data.comments)
+        this.commentsData.set(res.data.comments);
+        this.commentsLoaded.set(true);
       },
       error: (error) => {
         console.error(error);
         this.commentsError.set('Unable to load comments. Please try again later.');
       }
     })
+  }
+
+  toggleAllComments(): void {
+    if (this.allCommentsVisible()) {
+      this.allCommentsVisible.set(false);
+      return;
+    }
+
+    if (this.commentsLoaded()) {
+      this.allCommentsVisible.set(true);
+      return;
+    }
+
+    this.commentsError.set('');
+    this.commentsService.getPostComments(this.postId()).subscribe({
+      next: (res) => {
+        this.commentsData.set(res.data.comments);
+        this.commentsLoaded.set(true);
+        this.allCommentsVisible.set(true);
+      },
+      error: (error) => {
+        console.error('Unable to load comments:', error);
+        this.commentsError.set('Unable to load comments. Please try again later.');
+      }
+    });
   }
 
   creatComment(postID: string) {
@@ -105,7 +138,9 @@ export class CommentsComponent implements OnInit {
         if (form instanceof HTMLFormElement) {
           form.reset();
         }
-        this.getPostComments();
+        if (!this.composerOnly()) {
+          this.getPostComments();
+        }
       },
       error: (error) => {
         console.error('Unable to create comment:', error);

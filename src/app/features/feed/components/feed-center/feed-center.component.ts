@@ -21,6 +21,7 @@ export class FeedCenterComponent implements OnInit {
 
 
   readonly openPostMenu = signal<string | null>(null);
+  readonly openCommentComposerPostId = signal<string | null>(null);
   readonly postsError = signal('');
   readonly postSubmissionError = signal('');
   readonly likeError = signal('');
@@ -62,6 +63,10 @@ export class FeedCenterComponent implements OnInit {
 
   togglePostMenu(postId: string): void {
     this.openPostMenu.update((openPostId) => (openPostId === postId ? null : postId));
+  }
+
+  toggleCommentComposer(postId: string): void {
+    this.openCommentComposerPostId.update((openPostId) => (openPostId === postId ? null : postId));
   }
 
   isPostLiked(post: IPosts): boolean {

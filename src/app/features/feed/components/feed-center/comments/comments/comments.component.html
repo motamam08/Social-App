@@ -1,6 +1,7 @@
 <main class="mx-auto max-w-content px-4 py-4 desk:px-8">
     <!-- ═══════════════════════ COMMENTS START ═══════════════════════ -->
-    <section aria-labelledby="comments-title" class="flex flex-col gap-2.5">
+    <section aria-label="Comments" class="flex flex-col gap-2.5">
+        @if (!composerOnly() || allCommentsVisible()) {
         @if (commentsError()) {
         <p role="alert" class="error-message">{{ commentsError() }}</p>
         }
@@ -132,6 +133,39 @@
 
 
         </ul>
+        }
+
+        @if (composerOnly()) {
+        @if (!allCommentsVisible()) {
+        @if (topComment(); as comment) {
+        <article class="rounded-card border-2 border-line/30 bg-surface p-3 text-ink">
+            <header class="flex items-center gap-2.5">
+                <img [src]="comment.commentCreator.photo" [alt]="comment.commentCreator.name"
+                    class="size-9 rounded-full border-2 border-line object-cover">
+                <div class="min-w-0">
+                    <p class="truncate text-small font-bold">{{ comment.commentCreator.name }}</p>
+                    <time [attr.datetime]="comment.createdAt"
+                        class="font-mono text-label font-semibold text-ink/70">{{ comment.createdAt | relativeTime }}</time>
+                </div>
+            </header>
+            <p class="mt-2 leading-snug font-medium">{{ comment.content }}</p>
+        </article>
+        } @else {
+        <p class="text-small font-semibold text-ink/70">No comments yet.</p>
+        }
+        }
+
+        @if (commentCount() > 1) {
+        <button type="button" (click)="toggleAllComments()"
+            [attr.aria-expanded]="allCommentsVisible()"
+            class="w-fit cursor-pointer rounded-control border-2 border-line bg-surface px-3 py-1.5 text-small font-bold text-ink shadow-brutal-sm hover:bg-pop-blue/30 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink">
+            {{ allCommentsVisible() ? 'Hide comments' : 'Load all comments' }}
+        </button>
+        }
+        @if (commentsError()) {
+        <p role="alert" class="error-message">{{ commentsError() }}</p>
+        }
+        }
 
         <!-- ═════════ Create a comment (text + image) ═════════ -->
         <div class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">

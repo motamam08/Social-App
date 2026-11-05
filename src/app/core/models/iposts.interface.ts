@@ -1,3 +1,5 @@
+import { IComments } from './icomments.interface';
+
 export interface IPosts {
     _id: string;
     body?: string;
@@ -8,7 +10,7 @@ export interface IPosts {
     likes: any[];
     createdAt: string;
     commentsCount: number;
-    topComment: null;
+    topComment: IComments | null;
     sharesCount: number;
     likesCount: number;
     isShare: boolean;

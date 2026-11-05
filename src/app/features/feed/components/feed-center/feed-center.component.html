@@ -87,7 +87,8 @@
                     <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
                         <span class="break-all text-label font-semibold">@{{post.user.username}}-</span>
                         <time [attr.datetime]="post.createdAt"
-                            class="wrap-break-word font-bold text-label text-gray-400">{{post.createdAt | relativeTime}}</time>
+                            class="wrap-break-word font-bold text-label text-gray-400">{{post.createdAt |
+                            relativeTime}}</time>
                         <p class="text-label font-semibold font-mono ">{{post.privacy}}</p>
                     </div>
                 </div>
@@ -135,31 +136,37 @@
                 <div
                     class="flex flex-wrap items-center gap-x-4 gap-y-2 border-b-2 border-line/20 pb-3 text-small font-semibold text-ink/75">
                     <span>{{ post.likesCount }} likes</span>
-                    <a #commentsButton
-                        class="text-ink no-underline cursor-pointer hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
+                    <button type="button" (click)="toggleCommentComposer(post._id)"
+                        [attr.aria-expanded]="openCommentComposerPostId() === post._id"
+                        [attr.aria-controls]="'comment-composer-' + post._id"
+                        class="cursor-pointer text-ink no-underline hover:underline focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
                         {{ post.commentsCount }} comments
-                    </a>
+                    </button>
                     <span>{{ post.sharesCount }} shares</span>
                     <a [routerLink]='["/post-details", post._id]'
                         class="ml-auto font-extrabold text-ink underline decoration-2 underline-offset-2 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink">
                         Post details
                     </a>
                 </div>
-                <div class="grid grid-cols-3 gap-1.5">
+                <div class="flex gap-1.5">
                     <button (click)="likePost(post._id)" type="button"
                         [attr.aria-label]="(isPostLiked(post) ? 'Unlike post, ' : 'Like post, ') + post.likesCount + ' likes'"
-                        [attr.aria-pressed]="isPostLiked(post)"
-                        [class.bg-pop-pink]="isPostLiked(post)"
+                        [attr.aria-pressed]="isPostLiked(post)" [class.bg-pop-pink]="isPostLiked(post)"
                         [class.bg-surface]="!isPostLiked(post)"
                         class="inline-flex size-9 cursor-pointer items-center justify-center rounded-control border-2 border-line text-ink shadow-brutal-sm transition-[translate,box-shadow,background-color] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none hover:bg-pop-pink/50"
                         [title]="isPostLiked(post) ? 'Unlike post' : 'Like post'">
-                        <svg class="size-4.5" viewBox="0 0 24 24" [attr.fill]="isPostLiked(post) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2.5"
-                            aria-hidden="true">
+                        <svg class="size-4.5" viewBox="0 0 24 24"
+                            [attr.fill]="isPostLiked(post) ? 'currentColor' : 'none'" stroke="currentColor"
+                            stroke-width="2.5" aria-hidden="true">
                             <path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11z" />
                         </svg>
                     </button>
-                    <button type="button" aria-label="View comments" title="View comments"
-                        (click)="commentsButton.click()"
+                    <button type="button"
+                        [attr.aria-label]="openCommentComposerPostId() === post._id ? 'Hide comment composer' : 'Add a comment'"
+                        [attr.aria-expanded]="openCommentComposerPostId() === post._id"
+                        [attr.aria-controls]="'comment-composer-' + post._id"
+                        [title]="openCommentComposerPostId() === post._id ? 'Hide comment composer' : 'Add a comment'"
+                        (click)="toggleCommentComposer(post._id)"
                         class="inline-flex size-9 cursor-pointer items-center justify-center rounded-control border-2 border-line bg-surface text-ink no-underline shadow-brutal-sm transition-[translate,box-shadow] duration-100 ease-pop hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-brutal-xs active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink motion-reduce:transition-none hover:bg-pop-blue/30">
                         <svg class="size-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                             aria-hidden="true">
@@ -178,8 +185,15 @@
                     </button>
                 </div>
             </footer>
-            @defer (on interaction(commentsButton)) {
-            <app-comments [postId]="post._id"></app-comments>
+            @if (openCommentComposerPostId() === post._id) {
+            @defer {
+            <div [id]="'comment-composer-' + post._id">
+                <app-comments [postId]="post._id" [composerOnly]="true" [topComment]="post.topComment"
+                    [commentCount]="post.commentsCount"></app-comments>
+            </div>
+            } @placeholder {
+            <p role="status" class="p-4 text-small font-semibold text-ink/75">Loading comment composer…</p>
+            }
             }
         </article>
         }
