@@ -2,10 +2,11 @@ import { Component, inject, input, InputSignal, OnInit, signal, WritableSignal }
 import { CommentsService } from '../../../../../../core/auth/services/comments/comments.service';
 import { IComments } from '../../../../../../core/models/icomments.interface';
 import { IUserData } from '../../../../../../core/models/iuser-data.interface';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-comments',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.css',
 })
@@ -15,7 +16,13 @@ export class CommentsComponent implements OnInit {
   postId: InputSignal<string> = input.required();
   commentsData: WritableSignal<IComments[]> = signal([])
   readonly commentsError = signal('');
+  readonly commentSubmissionError = signal('');
   readonly currentUser = signal<IUserData | null>(null);
+
+  selectedImg: File | null = null;
+
+  // TEXT INPUT
+  commentInput = new FormControl('')
 
   resizeCommentTextarea(event: Event): void {
     if (event.currentTarget instanceof HTMLTextAreaElement) {
@@ -65,5 +72,44 @@ export class CommentsComponent implements OnInit {
 
       }
     })
+  }
+
+  onSubmmit(e: Event) {
+    if (e.target instanceof HTMLInputElement) {
+      this.selectedImg = e.target.files?.[0] ?? null;
+    }
+  }
+
+  submmitCreate(e: SubmitEvent) {
+    e.preventDefault();
+
+    const content = this.commentInput.value?.trim();
+    if (!content) {
+      this.commentSubmissionError.set('Comment text cannot be empty.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('content', content);
+    if (this.selectedImg) {
+      formData.append('image', this.selectedImg);
+    }
+
+    const form = e.currentTarget;
+    this.commentSubmissionError.set('');
+    this.commentsService.createComment(this.postId(), formData).subscribe({
+      next: () => {
+        this.commentInput.setValue('');
+        this.selectedImg = null;
+        if (form instanceof HTMLFormElement) {
+          form.reset();
+        }
+        this.getPostComments();
+      },
+      error: (error) => {
+        console.error('Unable to create comment:', error);
+        this.commentSubmissionError.set('Unable to create the comment. Please try again.');
+      }
+    });
   }
 }

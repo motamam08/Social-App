@@ -32,7 +32,7 @@ export class RightAsideComponent implements OnInit {
   follow(userId: string) {
     this.authService.followUnfollowUser(userId).subscribe({
       next: (res) => {
-
+        this.getSuggestions()
       },
       error: (err) => {
 

@@ -133,7 +133,10 @@
 
         <!-- ═════════ Create a comment (text + image) ═════════ -->
         <div class="rounded-card border-3 border-line bg-surface p-5.5 text-ink shadow-brutal-lg">
-            <form>
+            @if (commentSubmissionError()) {
+            <p role="alert" class="error-message">{{ commentSubmissionError() }}</p>
+            }
+            <form (submit)="submmitCreate($event)">
                 <div class="flex items-start gap-3">
                     <div aria-hidden="true"
                         class="overflow-hidden flex size-11.5 shrink-0 items-center justify-center rounded-full border-3 border-line bg-pop-yellow font-extrabold text-ink">
@@ -150,8 +153,9 @@
                         <div
                             class="rounded-control border-2 border-line/60 bg-surface transition-[border-color,box-shadow] focus-within:border-line focus-within:shadow-brutal-sm motion-reduce:transition-none">
                             <div class="relative">
-                                <textarea id="comment-body" name="body" rows="1" maxlength="500" required
-                                    placeholder="Add a comment..." (input)="resizeCommentTextarea($event)"
+                                <textarea id="comment-body" [formControl]="commentInput" name="body" rows="1"
+                                    maxlength="500" required placeholder="Add a comment..."
+                                    (input)="resizeCommentTextarea($event)"
                                     class="comment-textarea block w-full resize-none rounded-control border-0 bg-transparent px-3.5 py-3 pr-24 font-sans text-base font-semibold text-ink placeholder:font-medium placeholder:text-ink/50 focus:shadow-none focus:outline-none">
                                 </textarea>
                                 <div class="absolute right-2 bottom-1 flex items-end gap-1">
@@ -163,8 +167,8 @@
                                             <circle cx="8.5" cy="8.5" r="1.5" />
                                             <path d="m21 15-5-5L5 21" />
                                         </svg>
-                                        <input id="comment-image" name="image" type="file" accept="image/*"
-                                            class="sr-only" />
+                                        <input id="comment-image" name="image" type="file" (change)="onSubmmit($event)"
+                                            accept="image/*" class="sr-only" />
                                     </label>
 
                                     <button type="submit" aria-label="Comment" title="Comment"
